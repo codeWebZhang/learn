@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>二叉树</h1>
+    <script>
+      function Node(data, left, right) {
+        this.data = data;
+        this.left = left;
+        this.right = right;
+      }
+
+      Node.prototype = {
+        show: function() {
+          console.log(this.data);
+        }
+      };
+
+      function Tree() {
+        this.root = null;
+      }
+
+      Tree.prototype = {
+        insert: function(data) {
+          var node = new Node(data, null, null);
+          if (!this.root) {
+            this.root = node;
+            return;
+          }
+          var current = this.root;
+          var parent = null;
+          while (current) {
+            parent = current;
+            if (data < parent.data) {
+              current = current.left;
+              if (!current) {
+                parent.left = node;
+                return;
+              }
+            } else {
+              current = current.right;
+              if (!current) {
+                parent.right = node;
+                return;
+              }
+            }
+          }
+        }
+      };
+      var t = new Tree();
+      t.insert(3);
+      t.insert(8);
+      t.insert(1);
+      t.insert(2);
+      t.insert(5);
+
+      console.log(t);
+
+      //中序遍历
+      //递归实现
+      var inorderTranersal = function(root, array = []) {
+        if (root) {
+          inorderTranersal(root.left, array);
+          array.push(root.value);
+          inorderTranersal(root.right, array);
+        }
+        return array;
+      };
+
+      var str = {
+        value: 1,
+        left: {
+          value: 2,
+          left: {
+            value: 4,
+            left: {
+              value: 11
+            },
+            right: {
+              value: 12
+            }
+          },
+          right: {
+            value: 6
+          }
+        },
+        right: {
+          value: 3,
+          left: {
+            value: 5,
+            left: {
+              value: 7
+            },
+            right: {
+              value: 8
+            }
+          },
+          right: {
+            value: 6
+          }
+        }
+      };
+
+      //非递归实现
+      var inorderTravel = function(root) {
+        var result = [];
+        var stack = [];
+        var current = root;
+        while (current || stack.length > 0) {
+          while (current) {
+            stack.push(current);
+            current = current.left;
+          }
+          current = stack.pop();
+          result.push(current.value);
+          current = current.right;
+        }
+        return result;
+      };
+      console.log("中序遍历", inorderTravel(str), inorderTranersal(str, []));
+
+      //前序遍历
+      //
+      var preorderTraversal = function(root, array = []) {
+        if (root) {
+          array.push(root.value);
+          preorderTraversal(root.left, array);
+          preorderTraversal(root.right, array);
+        }
+        return array;
+      };
+
+      //非递归
+      var preorderTravers = function(root) {
+        const result = [];
+        const stack = [];
+        let current = root;
+        while (current || stack.length > 0) {
+          while (current) {
+            result.push(current.value);
+            stack.push(current);
+            current = current.left;
+          }
+          current = stack.pop();
+          current = current.right;
+        }
+        return result;
+      };
+
+      console.log("前序遍历", preorderTraversal(str, []), preorderTravers(str));
+
+      //后续遍历
+      //
+      var postorderTraversal = function(root, array = []) {
+        if (root) {
+          postorderTraversal(root.left, array);
+          postorderTraversal(root.right, array);
+          array.push(root.value);
+        }
+        return array;
+      };
+
+      //非递归
+      var postorderTravers = function(root) {
+        const result = [];
+        const stack = [];
+        let last = null; // 标记上一个访问的节点
+        let current = root;
+        while (current || stack.length > 0) {
+          while (current) {
+            stack.push(current);
+            current = current.left;
+          }
+          current = stack[stack.length - 1];
+          if (!current.right || current.right == last) {
+            current = stack.pop();
+            result.push(current.value);
+            last = current;
+            current = null; // 继续弹栈
+          } else {
+            current = current.right;
+          }
+        }
+        return result;
+      };
+      console.log(
+        "后续遍历",
+        postorderTraversal(str, []),
+        postorderTravers(str)
+      );
+    </script>
+  </body>
+</html>
