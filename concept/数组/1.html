@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>把数据排成最小的数</h1>
+    <p>
+      输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+      例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
+    </p>
+    <p>思路：定义一种排序规则，将整个数组重新排序</p>
+    <p>
+      a和b两个数字可以有2种组合，ab和ba，
+      若ab小于ba,则ab应排在ba后面；否则排在前面
+    </p>
+    <script>
+      function compare(a, b) {
+        const front = "" + a + b;
+        const behind = "" + b + a;
+        return front - behind;
+      }
+
+      function printMinNumber(arr) {
+        if (!arr || arr.length === 0) return;
+        return arr.sort(compare).join("");
+      }
+    </script>
+  </body>
+</html>
