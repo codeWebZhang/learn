@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h5>包含min函数的栈</h5>
+    <p>
+      定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+      #
+    </p>
+    <script>
+      var dataStack = [];
+      var minStack = [];
+
+      function push(node) {
+        dataStack.push(node);
+        if (minStack.length === 0 || node < min()) {
+          minStack.push(node);
+        } else {
+          minStack.push(min());
+        }
+      }
+      function pop() {
+        minStack.pop();
+        return dataStack.pop();
+      }
+      function top() {
+        var length = dataStack.length;
+        return length > 0 && dataStack[length - 1];
+      }
+      function min() {
+        var length = minStack.length;
+        return length > 0 && minStack[length - 1];
+      }
+    </script>
+  </body>
+</html>
