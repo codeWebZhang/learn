@@ -113,6 +113,7 @@
         var current = root;
         while (current || stack.length > 0) {
           while (current) {
+            debugger;
             stack.push(current);
             current = current.left;
           }
