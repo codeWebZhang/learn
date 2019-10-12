@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>with 语句</h1>
+    <script>
+      //如果out执行作用域没有被访问的变量，会沿着当前作用域和当前作用域上级一直向上查找
+      //   var out = { a: 1 };
+      //   var b = 2;
+      //   function test() {
+      //     var a = 2;
+      //     var b = 3;
+      //     with (out) {
+      //       console.log(b);
+      //     }
+      //   }
+      //   test();
+
+      //   //
+      //   var b = { a: 2 };
+      //   function sayA(obj) {
+      //     var a = 1;
+      //     with (b) {
+      //       a = 5;
+      //       c = 6;
+      //     }
+      //     console.log(c);
+      //   }
+      //   sayA();
+      //   console.log(b.c);
+      //   console.log(b.a);
+
+      //创建沙箱
+      var c = 11919;
+      function compileCode(src) {
+        src = "with (exposeObj) { " + src + "}";
+        return new Function("exposeObj", src);
+      }
+
+      function proxyObj(originObj) {
+        let exposeObj = new Proxy(originObj, {
+          has: (target, key) => {
+            if (["console", "Math", "Date"].indexOf(key) >= 0) {
+              return target[key];
+            }
+            if (!target.hasOwnProperty(key)) {
+              throw new Error("Illegal operation ");
+            }
+            return target[key];
+          }
+        });
+        return exposeObj;
+      }
+
+      function createSandbox(src, obj) {
+        let proxy = proxyObj(obj);
+        compileCode(src).call(proxy, proxy);
+      }
+
+      const testObj = {
+        value: 1,
+        a: { b: 111 }
+      };
+      //c是全局的变量，testObj虽然没有这个属性，但也不会向上查找（全局）
+      createSandbox("value='haha';console.log(c)", testObj);
+    </script>
+  </body>
+</html>
