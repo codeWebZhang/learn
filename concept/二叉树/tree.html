@@ -64,6 +64,7 @@
       //中序遍历
       //递归实现
       var inorderTranersal = function(root, array = []) {
+        debugger;
         if (root) {
           inorderTranersal(root.left, array);
           array.push(root.value);
@@ -113,7 +114,6 @@
         var current = root;
         while (current || stack.length > 0) {
           while (current) {
-            debugger;
             stack.push(current);
             current = current.left;
           }
