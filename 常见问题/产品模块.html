@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>产品模块遇到的问题，及解决方案</h1>
+    <p>1.路由多次render</p>
+    <p>解决：路由不用render回调方式，在右侧子路由页面，用 const match: any = matchPath(location.pathname, {
+        path: "/list/info/:productId",
+        strict: false
+        });
+        const productId = match.params.productId; 获取需要的id</p>
+    <p>
+        产品动作编辑、新增任何一个，都会请求allProduct接口
+    </p>
+    <p>解决：编辑完成返回成功之后，不去请求allProduct接口，把数据放进reducer。谨记：把actonTabel中table的
+        key={UUID.v1()，把这个key属性删除，否则会导致多次render，存不住已经编辑后修改的值</p>
+    <p>
+
+    </p>
+</body>
+
+</html>
