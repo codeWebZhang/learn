@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h4>
+        在for循环中可以使用return、break、continue
+    </h4>
+    <h4>但是在map、forEach中如何退出循环（在map、forEach中使用break、continue会抛错）</h4>
+    <div><img src="./image//break.png" /></div>
+    <h4>在forEach、map中使用return， 也不能退出循环。 -- 针对这个问题可以使用some()与every()</h4>
+
+    <p>--some()当内部return true时，退出整个循环</p>
+    <p>
+        var arr = [1,2,3,4,5];
+        var num = 3;
+        arr.some(function(v){
+        if(v == num) {
+        return true;
+        }
+        console.log(v);
+        });
+    </p>
+    <p><img src="./image/some.png" /></p>
+    <!-- 输出：1，2 -->
+
+    <p>every()当内部return false时 退出整个循环</p>
+    <p>var arr = [1,2,3,4,5];
+        var num = 3;
+        arr.every(function(v){
+        if(v == num) {
+        return false;
+        }else{
+        console.log(v);
+        return true;
+        }
+        });
+    </p>
+    <p><img src="./image/every.png" /></p>
+</body>
+
+</html>
