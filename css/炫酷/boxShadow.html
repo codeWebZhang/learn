@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+        }
+
+        .burger-menu {
+            position: relative;
+            z-index: 2;
+            width: 10em;
+            height: 10em;
+            background: #222;
+            border: solid 2px black;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .burger-menu .line {
+            position: absolute;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: black;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .burger-menu .line:nth-child(1) {
+            top: 30%;
+        }
+
+        .burger-menu .line:nth-child(3) {
+            bottom: 30%;
+        }
+
+        .burger-menu .line::after {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: lightblue;
+            transform: translateX(-100%);
+            transition: all 0.25s ease;
+        }
+
+        .burger-menu .line:nth-child(2)::after {
+            transition-delay: 0.1s;
+        }
+
+        .burger-menu .line:nth-child(3)::after {
+            transition-delay: 0.2s;
+        }
+
+        .burger-menu:hover .line::after {
+            transform: translateX(0);
+        }
+
+        .burger-menu.active {
+            box-shadow: 0 0 0 1000px lightblue;
+        }
+
+        .burger-menu.active .line:nth-child(1) {
+            top: 50%;
+            transform: rotate(45deg);
+        }
+
+        .burger-menu.active .line:nth-child(2) {
+            transform: scaleX(0);
+        }
+
+        .burger-menu.active .line:nth-child(3) {
+            bottom: 50%;
+            transform: rotate(-45deg);
+        }
+    </style>
+</head>
+
+<body>
+    <button class="burger-menu">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </button>
+
+
+    <script>
+        var burgerMenu = document.querySelector(".burger-menu");
+        burgerMenu.addEventListener("click", function () {
+            burgerMenu.classList.toggle("active");
+        });
+    </script>
+</body>
+
+</html>
