@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Lora:400,400i,700");
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #121212;
+        }
+
+        .menu-hover-image {
+            position: relative;
+            width: 50rem;
+            font-family: Lora, serif;
+            list-style-type: none;
+        }
+
+        .menu-hover-image .cursor {
+            position: absolute;
+            top: -50%;
+            left: -25%;
+            z-index: -1;
+            width: 600px;
+            height: 400px;
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            background-position: 50% 50%;
+            background-size: cover;
+            opacity: 0;
+        }
+
+        .menu-hover-image .menu-item:nth-child(1):hover~.cursor {
+            background-image: url("https://i.loli.net/2019/10/18/buDT4YS6zUMfHst.jpg");
+        }
+
+        .menu-hover-image .menu-item:nth-child(2):hover~.cursor {
+            background-image: url("https://i.loli.net/2019/10/18/uXF1Kx7lzELB6wf.jpg");
+        }
+
+        .menu-hover-image .menu-item:nth-child(3):hover~.cursor {
+            background-image: url("https://i.loli.net/2019/11/23/cnKl1Ykd5rZCVwm.jpg");
+        }
+
+        .menu-hover-image .menu-item:nth-child(4):hover~.cursor {
+            background-image: url("https://i.loli.net/2019/11/03/RtVq2wxQYySDb8L.jpg");
+        }
+
+        .menu-hover-image .menu-item a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            text-decoration: none;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            mix-blend-mode: difference;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="menu-hover-image">
+        <li class="menu-item">
+            <a href="#">
+                <h1>Home</h1>
+                <span>alphardex</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="#">
+                <h1>Projects</h1>
+                <span>CSS Creations</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="#">
+                <h1>Blogs</h1>
+                <span>Memories</span>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="#">
+                <h1>About</h1>
+                <span>CSS Wizard</span>
+            </a>
+        </li>
+        <div class="cursor"></div>
+    </ul>
+
+    <script>
+        var menuItems = document.querySelectorAll(".menu-hover-image .menu-item");
+        var cursor = document.querySelector(".menu-hover-image .cursor");
+        var getXY = function (e) {
+            return [
+                e.clientX,
+                e.clientY];
+        };
+        menuItems.forEach(function (menuItem) {
+            // use mouseenter and mouseleave to toggle cursor since they won't bubble!
+            menuItem.addEventListener("mouseenter", function (e) {
+                var _a = getXY(e), x = _a[0], y = _a[1];
+                cursor.animate([
+                    {
+                        opacity: 0,
+                        transform: "translate(" + x + "px, " + y + "px) scale(0)"
+                    },
+
+                    {
+                        opacity: 1,
+                        transform: "translate(" + x + "px, " + y + "px) scale(1)"
+                    }],
+
+                    { duration: 300, fill: "forwards" });
+                menuItem.addEventListener("mouseleave", function (e) {
+                    var _a = getXY(e), x = _a[0], y = _a[1];
+                    cursor.animate([
+                        {
+                            opacity: 1,
+                            transform: "translate(" + x + "px, " + y + "px) scale(1)"
+                        },
+
+                        {
+                            opacity: 0,
+                            transform: "translate(" + x + "px, " + y + "px) scale(0)"
+                        }],
+
+                        { duration: 300, fill: "forwards" });
+                });
+            });
+            // move the cursor when mouse moves.
+            menuItem.addEventListener("mousemove", function (e) {
+                var _a = getXY(e), x = _a[0], y = _a[1];
+                cursor.animate([
+                    {
+                        transform: "translate(" + x + "px, " + y + "px)"
+                    }],
+
+                    { duration: 500, delay: 50, fill: "forwards" });
+            });
+        });
+    </script>
+</body>
+
+</html>
