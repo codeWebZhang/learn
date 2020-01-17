@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>rest client代替postman的插件</h1>
+    <div>
+        1.安装插件
+        2.新建.http文件
+    </div>
+    <div主要内容，看下面</div> <div>
+        @host = http://103.93.180.122:8083
+        ###
+        # post请求{body} 必须换行
+        # @name login
+        POST {{host}}/api/v1/login HTTP/1.1
+        content-type: application/json
+
+        {
+        "identity":"zhl@163.com",
+        "password":"123456"
+        }
+
+        ###
+        @Authorization = {{login.response.body.accessToken}}
+
+        ###
+        GET {{host}}/api/v1/me/info HTTP/1.1
+        Authorization: {{Authorization}}
+
+        ###
+        GET {{host}}/api/v1/app/list HTTP/1.1
+        Authorization: {{Authorization}}
+
+        ###
+        post {{host}}/api/v1/products HTTP/1.1
+        Authorization: {{Authorization}}
+        Content-Type: application/json
+
+        {
+        "name": "test",
+        "maxInterval": 0,
+        "description": "",
+        "type": 0
+        }
+        </div>
+
+        <p>
+            注意点：
+            1.# @name login 代表login的api
+            2.post请求设置body({})时，和header设置间隔1行
+        </p>
+</body>
+
+</html>
