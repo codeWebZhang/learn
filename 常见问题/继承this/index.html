@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>继承</h1>
+    <script>
+        function Parent (name) {
+            this.name = name;
+            this.arr = [1]
+        }
+
+        Parent.prototype.say = function() {
+            console.log('hello')
+        }
+    
+        function Child(name, like) {
+            Parent.call(this, name, like) 
+            console.log(Parent.call(this, name, like),'===')
+            this.like = like
+            //调用Parent 赋值this.name,this.arr, 然后 this.like赋值 最后return this对象
+        }
+
+        // Child.prototype = new Parent();
+        let boy1 = new Child('xiaohong', 'apple');
+        console.log(boy1,'boy1')
+    </script>
+</body>
+</html>

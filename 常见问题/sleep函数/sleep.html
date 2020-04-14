@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>sleep函数</h1>
+    <p>每隔1秒输出 1， 2， 3， 4， 5</p>
+    <script>
+        function sleep(interval) {
+            return new Promise((resolve) => {
+                setTimeout(resolve, interval);
+            });
+        }
+
+        async function ontToFiveAsync() {
+            for (let i = 0; i < 5; i++) {
+                console.log(i)
+                await sleep(1000);
+            }
+        }
+        ontToFiveAsync();
+    </script>
+
+    <h1>实现一个红绿灯 </h1>
+    <p>红灯2秒，黄灯1秒，绿灯3秒</p>
+    <script>
+        function sleepRoad(duration) {
+            return new Promise(resolve => {
+                setTimeout(resolve, duration);
+            });
+        }
+
+        async function changeColor(color, duration) {
+            console.log(color, 'color')
+            await sleepRoad(duration)
+        }
+
+        async function main() {
+            await changeColor("red", 2000);
+            await changeColor("yellow", 1000);
+            await changeColor("green", 3000);
+        }
+        main();
+    </script>
+</body>
+
+</html>

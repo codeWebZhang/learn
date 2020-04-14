@@ -1,73 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>with 语句</h1>
-    <script>
-      //如果out执行作用域没有被访问的变量，会沿着当前作用域和当前作用域上级一直向上查找
-      //   var out = { a: 1 };
-      //   var b = 2;
-      //   function test() {
-      //     var a = 2;
-      //     var b = 3;
-      //     with (out) {
-      //       console.log(b);
-      //     }
-      //   }
-      //   test();
 
-      //   //
-      //   var b = { a: 2 };
-      //   function sayA(obj) {
-      //     var a = 1;
-      //     with (b) {
-      //       a = 5;
-      //       c = 6;
-      //     }
-      //     console.log(c);
-      //   }
-      //   sayA();
-      //   console.log(b.c);
-      //   console.log(b.a);
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
 
-      //创建沙箱
-      var c = 11919;
-      function compileCode(src) {
-        src = "with (exposeObj) { " + src + "}";
-        return new Function("exposeObj", src);
-      }
+<body>
+  <h1>with 语句</h1>
+  <p>总结：function(){ with（object） {} }</p>
+  <p>传入的object对象存在的属性，必须在with语句块内才能访问；with语句块内新增object不存在的属性，此属性新增到当前的函数作用域，所以可以在with语句块外 函数内访问</p>
 
-      function proxyObj(originObj) {
-        let exposeObj = new Proxy(originObj, {
-          has: (target, key) => {
-            if (["console", "Math", "Date"].indexOf(key) >= 0) {
-              return target[key];
-            }
-            if (!target.hasOwnProperty(key)) {
-              throw new Error("Illegal operation ");
-            }
+  <p>new Function（a,b, statement）</p>
+  <p>statement即最后一个参数是语句块，即表达式， 之前都是方法传入的参数，定义的时候必须为字符串，否则报错</p>
+  <script>
+    //如果out执行作用域没有被访问的变量，会沿着当前作用域和当前作用域上级一直向上查找
+    // var out = { a: 1 };
+    // var b = 2;
+    // function test() {
+    //   var a = 2;
+    //   var b = 3;
+    //   with (out) {
+    //     console.log(b);
+    //   }
+    // }
+    // test();
+
+    //   //
+    // var b = { a: 2 };
+    // function sayA(obj) {
+    //   var c = 99;
+    //   with (b) {
+    //     a = 5;
+    //     c = 6;
+    //     x = "test"
+    //     // console.log(a, c, x)
+    //   }
+    //   //此时报错，b对象中包含a属性，width语句中的a属性是赋值给 b.a=5
+    //   // console.log(a) 
+    //   //不报错，c,x属性都不是b对象的属性，所以新增c、x属性属于局部作用域的变量
+    //   console.log(c, x);
+    // }
+    // sayA();
+    // console.log(b.c);
+    // console.log(b.a);
+
+    //创建沙箱
+    var c = 11919;
+    function compileCode(src) {
+      src = "with (exposeObj) { " + src + "}";
+      //exposeObj 为形参
+      return new Function("exposeObj", src);
+    }
+
+    function proxyObj(originObj) {
+      let exposeObj = new Proxy(originObj, {
+        has: (target, key) => {
+          if (["console", "Math", "Date"].indexOf(key) >= 0) {
             return target[key];
           }
-        });
-        return exposeObj;
-      }
+          if (!target.hasOwnProperty(key)) {
+            throw new Error("Illegal operation ");
+          }
+          return target[key];
+        }
+      });
+      return exposeObj;
+    }
 
-      function createSandbox(src, obj) {
-        let proxy = proxyObj(obj);
-        compileCode(src).call(proxy, proxy);
-      }
+    function createSandbox(src, obj) {
 
-      const testObj = {
-        value: 1,
-        a: { b: 111 }
-      };
-      //c是全局的变量，testObj虽然没有这个属性，但也不会向上查找（全局）
-      createSandbox("value='haha';console.log(c)", testObj);
-    </script>
-  </body>
+      let proxy = proxyObj(obj);
+      compileCode(src).call(proxy, proxy);
+      //等同于 let test = new Function("exposeObj", "with(exposeObj){...}")
+      //等同于  function test(obj){
+      //   with(obj){
+      //     ...
+      //   }
+      // }
+      //等同于 test.bind(proxy,proxy) => text(testObj)
+    }
+
+    const testObj = {
+      value: 1,
+      a: { b: 111 }
+    };
+    //c是全局的变量，testObj虽然没有这个属性，但也不会向上查找（全局）
+    createSandbox("value='haha';console.log(value)", testObj);
+    createSandbox("value='haha';console.log(c)", testObj);
+
+    //new Function 参数：最后一个为表达式，前面都是传入的参数，且定义为字符串
+    let sum = new Function("a", "b", "return a + b");
+    console.log(sum(1, 2), 'sum')
+
+  </script>
+</body>
+
 </html>
