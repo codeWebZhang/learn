@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>递归函数调用结束，会反方向执行到第一层函数结束嘛</h1>
+    <p>例1：斐波那切数列</p>
+    <script>
+        //当n===1或者0时，依次返回执行
+        const fibonacci = (n) => {
+            if (n === 0 || n === 1) {
+                return n;
+            }
+            return fibonacci(n - 1) + fibonacci(n - 2)
+            // fibonacci(n - 1) + fibonacci(n - 2)
+        }
+        console.log(fibonacci(5), "fibonacci")
+    </script>
+    <p>例2：</p>
+    <script>
+        const fn = (n) => {
+            // debugger
+            if (n === 10) {
+                return n;
+            }
+            let v = n + 1;
+            // console.log(v, 'v')
+            return fn(v);
+        }
+        console.log(fn(1), "fn")
+
+
+
+
+    </script>
+
+
+    <p>
+        递归调用，当条件满足终止条件时，会从最后被调用函数反序依次返回；
+        例1：
+        fibonacci(5) => fibonacci(4) + fibonacci(3) =>
+        fibonacci(3) + fibonacci(2) + fibonacci(2) + fibonacci(1) =>
+        fibonacci(2) + fibonacci(1) + fibonacci(1) + fibonacci(0) + fibonacci(1) + fibonacci(0) + fibonacci(1) =>
+        fibonacci(1) + fibonacci(0) + fibonacci(1) + fibonacci(1) + fibonacci(0) + fibonacci(1) + fibonacci(0) +
+        fibonacci(1)
+
+        <!--                                                     fibonacci(5)                    
+                                                                /             \
+                                                    fib(4)                  fib(3)
+                                                /           \              /     \
+                                            fib(3)           fib(2)      fib(2)     fib(1)
+                                           /       \        /      \       /   \
+                                      fib(2)      fib(1)  fib(1) fib(0)  fib(1) fib(0)
+                                      /   \
+                                    fib(1) fib(0)
+         -->
+    </p>
+    <p>
+        例2：
+        fn(1) => fn(2) => f(3) => f(4) => f(5)
+
+        <!--                    fn(1)
+                                  |
+                                fn(2)
+                                  |
+                                fn(3)
+                                  |
+                                fn(4)
+                                  |
+                                fn(5)
+         -->
+        f(1) return f(2);
+        f(2) return f(3);
+        ....
+        f(4) return f(5);
+        f(5) ===5 return 5;
+        所以执行到终止条件，反序依次返回
+    </p>
+    <script>
+    </script>
+</body>
+
+</html>
