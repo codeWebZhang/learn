@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>call实现</p>
+
+    <script>
+        let person = {
+            name: "hong",
+            say: function (param) {
+                console.log(param + " hello " + this.name)
+            }
+        }
+
+        let person1 = {
+            name: "li"
+        }
+        // console.log(person1.say())
+        // console.log(person.say.call())
+        console.log(person.say.call(person1, 'word'))
+
+        //错误写法 箭头函数没有this
+        // Function.prototype.myCall = (context) => {
+        // }
+
+
+        Function.prototype.myCall = function (context) {
+            context = context || window;
+            let fn = mySymbol(context);
+            context[fn] = this;
+            //处理参数 去除第一个参数this, 其它出入fn函数
+            let arg = [...arguments].slice(1);//[...xxx] 把类数组转化为数组
+            context[fn](...arg);
+            delete context[fn];
+        }
+
+        function mySymbol(obj) {
+            let unique = (Math.random() + new Date().getTime()).toString(32).slice(0, 8);
+            console.log(unique, 'unique')
+            if (obj.hasOwnProperty(unique)) {
+                return mySymbol(obj)
+            } else {
+                return unique;
+            }
+        }
+        console.log(person.say.myCall(person1, 'word'))
+    </script>
+</body>
+
+</html>
