@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>promise</h1>
+    <script>
+        const asyncRun1 = () => {
+            let p = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log("第一个promise执行结束")
+                    resolve('promise1')
+                }, 2000)
+            })
+            return p;
+        }
+
+        const asyncRun2 = (data) => {
+            let p = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log("第二个promise执行结束", data)
+                    resolve(data);
+                }, 3000)
+            })
+            return p;
+        }
+
+        const asyncRun3 = (data) => {
+            let p = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    console.log("第三个promise执行结束", data)
+                }, 5000)
+            })
+            return p;
+        }
+
+        // asyncRun1().then((data) => {
+        //     console.log("第一个 then方法执行结束");
+        //     return asyncRun2(data);
+        // }).then((data) => {
+        //     console.log(data, 'data')
+        //     return asyncRun3(data);
+        // });
+
+
+        //如果全局定义2个定时器，第二个定时器不会等待第一个执行完再去执行；例如下面的例子，第一个定时器执行完2s后，
+        //第二个定时器执行 所以多个定时器会一起被触发执行
+        setTimeout(() => {
+            console.log("第1个定时器")
+        }, 3000)
+
+        setTimeout(() => {
+            console.log("第2个定时器")
+        }, 5000)
+    </script>
+</body>
+
+</html>

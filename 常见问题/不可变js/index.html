@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>不可变js</h1>
+    <p>es6 中解构和扩展运算符一起使用，会产生新对象，从而支持不可变数据 {...props} 因为产品新对象</p>
+    <script>
+        let student = {
+            name: "zhang",
+            age: 11,
+            scholl: {
+                name: "beijing1"
+            }
+        }
+
+        const changeImperative = (props) => {
+            let obj = props;
+            return obj;
+        }
+
+        const changeFunctional = (props) => {
+            let obj = { ...props }
+            return obj;
+        }
+
+        function jiegou(props) {
+            return { ...props } //返回了新对象  所以和源对象不是一个地址
+        }
+
+
+        let Imperative = changeImperative(student);
+        let Functional = changeFunctional(student);
+        let newData = changeFunctional(student);
+        console.log(student === Imperative, student === Functional, student === newData)
+    </script>
+</body>
+
+</html>

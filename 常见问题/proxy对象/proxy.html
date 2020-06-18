@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>概念</h1>
+    <p>
+        Proxy用于修改某些操作的默认行为，也可以理解为在目标对象之前架设一层拦截，外部所有的访问都必须先通过这层拦截，因此提供了一种机制，可以对外部的访问进行过滤和修改。这个词的原理为代理，在这里可以表示由它来“代理”某些操作，译为“代理器”。
+    </p>
+    <script>
+        // let target = {
+        //     x: 10,
+        //     y: 20
+        // }
+        // let hanler = {
+        //     get: (obj, prop) => 42 //obj是传入的target
+        // }
+
+        // target = new Proxy(target, hanler)
+
+        // target.x //42
+        // target.y //42
+        // target.x // 42
+
+        //隐藏属性
+        const hide = (target, prefix = '_') => new Proxy(target, {
+            has: (obj, prop) => (!prop.startsWith(prefix) && prop in obj),
+            ownKeys: (obj) => Reflect.ownKeys(obj) //控制对象的属性，使得属性是否 for...of 能被遍历到
+                .filter(prop => {
+                    // console.log(typeof prop, "typeof", "====", !prop.startsWith(prefix))
+                    return typeof prop !== "string" || !prop.startsWith(prefix)
+                }
+                ),
+            get: (obj, prop, rec) => (prop in rec) ? obj[prop] : undefined
+        })
+
+        let userData = hide({
+            firstName: 'Tom',
+            mediumHandle: '@tbarrasso',
+            _favoriteRapper: 'Drake'
+        })
+
+        for (let key in Object.keys(userData)) {
+            console.log(key, 'in key')
+        }
+
+        for (let key of Object.keys(userData)) {
+            console.log(key, 'of key')
+        }
+
+        console.log(userData._favoriteRapper)        // undefined
+        console.log(('_favoriteRapper' in userData)) // false
+        console.log(userData.firstName)        // undefined
+
+
+    </script>
+</body>
+
+</html>

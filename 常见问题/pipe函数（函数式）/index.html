@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>函数式编程</h1>
+    <script>
+        //reduce函数
+        // arr.reduce(callback, [initiaVal])
+        // callback:
+        //         pre: 上一次调用返回的值，后者是提供的初始值
+        //         cur：数组当前被处理的元素
+        //         index： 当前元素在数组中索引
+        //         array： 调用的reduce数组
+        // initiaVal： 作为第一次调用callback的第一个参数
+
+        let data = [1, 2, 3, 4]
+        data.reduce((pre, cur, index, arr) => {
+            // console.log(pre, cur, index, arr, '=====')
+            return cur;
+        }, 0)
+
+
+        // 如下所示：实现一个pipe函数
+        const square = v => v * v
+        const double = v => v * 2
+        const addOne = v => v + 1
+        // const res = pipe(square, double, addOne)
+        // console.log(res(3)) // 19; addOne(double(square(3)))
+
+
+        const customPipe = (...arg) => {
+            return (param) => {
+                return arg.reduce((pre, cur) => {
+                    return cur(pre)
+                }, param)
+            }
+        }
+
+        let customRes = customPipe(square, double, addOne)
+        console.log(customRes(3), 'result')
+
+
+        //简写形式
+        const customPipe1 = (...arg) => (param) => arg.reduce((pre, cur) => cur(pre), param);
+        let customRes1 = customPipe1(square, double, addOne)
+        console.log(customRes1(3), '简写形式')
+    </script>
+</body>
+
+</html>
