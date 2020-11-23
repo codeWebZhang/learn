@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>forEach 与 map 区别</h1>
+    <p>结论：forEach,map都会改变原数组； 区别：forEach没有返回值， map有返回值</p>
+    <script>
+        let a = [1, 2, 3];
+        let b = [1, 2, 3];
+        let c = a.forEach((ele, index, arr) => {
+            arr[index] = ele + 1;
+        })
+        console.log(a, '-=-', c)
+
+        let d = b.map((ele, index, arr) => {
+            arr[index] = ele + 1;
+
+            //这种写法不可以修改原数组
+            // return ele = ele + 1; 
+        })
+        console.log(b, '******', d)
+    </script>
+</body>
+
+</html>

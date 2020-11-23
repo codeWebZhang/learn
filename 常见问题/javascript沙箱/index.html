@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>动手实现一个Javascript沙箱</p>
+
+    <script>
+        const test = (code) => {
+            return Function(code)();
+        }
+        let code = "let a='我真的执行了'; let b=2; console.log(a,'==',b)"
+        // test(code);
+
+        //初版实现
+        //     const global = this;
+        //     (function () {
+        //         let outterVariable = 'outter';
+        //         const createSandbox = () => {
+        //             return code => {
+        //                 Function(`
+        //             ;${code};
+        //         `)();
+        //             };
+        //         };
+        //         const sandbox = createSandbox();
+        //         sandbox(`
+        //     var a = 1;
+        //     var b = 2;
+        //     // 期待打出 1 2
+        //     console.log(a, b);
+        //     //等于window.outterVariable
+        //     outterVariable = 'sandbox';
+        //     console.log(outterVariable);
+        // `);
+        //         try {
+        //             console.log(a, 'fail');
+        //         } catch (e) {
+        //             console.log('success, a不能被访问到了,沙箱已形成');
+        //         }
+        //         try {
+        //             console.log(b, 'fail');
+        //         } catch (b) {
+        //             console.log('success');
+        //         }
+        //         console.log(outterVariable);
+        //     })();
+        //     console.log(outterVariable);
+
+
+        // Function('context="我是全局变量了"')()
+        // console.log(context, 'global')
+        //结论 Function() 可以把context设置为全局变量
+
+        //函数里包含多层函数，变量之间的关系
+        const fnOrFn = () => {
+            let a = '第一层的变量';
+            const two = () => {
+                a = "第二层改变了变量"
+                console.log(a, '第二层打印')
+                const three = () => {
+                    console.log(a, '第三层打印');
+                    newVal = '会赋值到全局';
+                }
+                three();
+            }
+            two();
+        }
+        // fnOrFn();
+        // console.log(newVal)
+        //结论 从当前作用域到全局作用域都没有找到该变量的声明，则把该变量声明到全局作用域，并赋值；
+        //反之赋值到被声明的作用域并赋值
+
+        const global = this;
+        globalName = "zhang";
+        (function () {
+            let outterVariable = 'outter';
+            const createSandbox = () => {
+                const context = Object.create(global);
+                const proxy = new Proxy(context, {
+                    set: (obj, prop, value) => {
+                        obj[prop] = value;
+                    },
+                    get: (obj, prop) => {
+                        return obj[prop];
+                    },
+                    has: () => {
+                        return true;
+                    }
+                });
+                return code => {
+                    Function(
+                        'proxy',
+                        `
+                with(proxy) {
+                    ;${code};
+                }
+            `
+                    )(proxy);
+                };
+            };
+            const sandbox = createSandbox();
+            sandbox(`
+        var a = 1;
+        var b = 2;
+        // 期待打出 1 2
+        console.log(a, b);
+        //全局的outterVariable
+        // window.outterVariable = 'global sandbox';
+        //私有的outterVariable
+        outterVariable = 'sandbox';
+        console.log(outterVariable);
+        console.log(globalName,'globalName');
+    `);
+            try {
+                console.log(a, 'fail');
+            } catch (e) {
+                console.log('success');
+            }
+            try {
+                console.log(b, 'fail');
+            } catch (b) {
+                console.log('success');
+            }
+            console.log(outterVariable);
+        })();
+        console.log('outterVariable' in global);
+
+    </script>
+</body>
+
+</html>
