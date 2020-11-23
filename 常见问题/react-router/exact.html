@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>react-router中exact解释</p>
+    <p>
+        exact属性精确匹配
+        只有页面的路由和<Route>的path属性精确比对后完全相同该<Route>才会被渲染。
+    </p>
+    <p>
+        这里想实现一个功能，项目刚进来的时候，路由默认为/，这时候默认进页面路由一，如果页面改成其他的，跳转其他页面。
+    </p>
+
+    <Router history={history}>
+        <Switch>
+            <Route path='/' render={()=>(<div>页面一</div>)}/>
+                <Route path='/home' component={()=>(<div>页面二</div>)}/>
+        </Switch>
+    </Router>
+    <!-- ---- -->
+    <p>
+        会发现不管路由怎么切换，始终渲染的都是path为/的页面，这是因为/匹配所有页面，
+        所以不管路由怎么切换，始终渲染页面一。针对以上问题，我们可以采取调整顺序的解决办法，
+        就是将path为/的路由放到最后，因为Switch的特性，只要页面匹配完一个路径，它就停止渲染。
+    </p>
+
+    解决办法:
+    <Router history={history}>
+        <Switch>
+            <Route path='/' exact render={()=>(<div>页面一</div>)}/>
+                <Route path='/home' component={()=>(<div>页面二</div>)}/>
+        </Switch>
+    </Router>
+
+
+
+    <script>
+        // 如果 Route组件中 path路径含有多个相似路径，如
+        //     < Route path = '/product' /> <Route path="/product/order/:id" />
+        // 则想要配置到第二个路由，第一个路由添加exact属性
+    </script>
+</body>
+
+</html>

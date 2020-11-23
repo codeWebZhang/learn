@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .wrapper {
+        width: 200px;
+        height: 200px;
+        background-color: khaki;
+    }
+</style>
+
+<body>
+    <div id="drag1" draggable="true">1</div>
+    <div id="drag2" draggable="true">2</div>
+    <div class="wrapper">放置框</div>
+
+    <script>
+        var oDrag1 = document.getElementById('drag1'),
+            oDrag2 = document.getElementById('drag2'),
+            oWrapper = document.getElementsByClassName('wrapper')[0];
+        var child = oWrapper.childNodes;
+
+        oDrag1.addEventListener('dragstart', function (e) {
+            //设置 数据
+            e.dataTransfer.setData('data', this.id);
+            e.dataTransfer.effectAllowed = 'copy';
+        })
+
+        oDrag1.addEventListener('dragend', function (e) {
+            //设置 数据
+            e.dataTransfer.effectAllowed = 'copy';
+        })
+
+        oDrag2.addEventListener('dragstart', function (e) {
+            e.dataTransfer.setData('data', this.id);
+        })
+
+        oWrapper.addEventListener('dragenter', function () {
+
+            // //删除文本节点'放置框'
+            // for (var i = 0; i < child.length; i++) {
+            //     if (child[i].nodeType === 3) {
+            //         console.log(child[i]);
+            //         // oWrapper.removeChild(child[i])
+            //     }
+            // }
+        })
+
+        oWrapper.addEventListener('dragover', function (e) {
+            //触发 drop 事件必须先在 dragover 里面取消默认事件
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+        })
+
+        oWrapper.addEventListener('drop', function (e) {
+            console.log(e.dataTransfer);
+            //获取 数据
+            var data = e.dataTransfer.getData('data');
+            oWrapper.appendChild(document.getElementById(data));
+        })
+    </script>
+</body>
+
+</html>

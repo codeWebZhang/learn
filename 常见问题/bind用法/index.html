@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>bind 用法</h1>
+    <p>错误语法: t.bind(object) 此写法不生效</p>
+    <p>正确语法: t.bind(object)() 此写法不生效</p>
+    <p>t代表function</p>
+
+    <input value="hello" />
+
+    <div>单页面解释</div>
+    <p>
+        现如今，Web 开发人员将他们构建的产品称为 Web 应用，而不是网站。虽然这两个术语之间没有严格的区别，但网络应用往往具有高度的交互性和动态性，允许用户执行操作并接收他们的操作响应。在过去，浏览器从服务器接收 HTML
+        并渲染。当用户导航到其它 URL 时，需要整页刷新，服务器会为新页面发送新的 HTML。这被称为服务器端渲染。
+
+        然而，在现代的 SPA 中，客户端渲染取而代之。浏览器从服务器加载初始页面、整个应用程序所需的脚本（框架、库、应用代码）和样式表。当用户导航到其他页面时，不会触发页面刷新。该页面的 URL 通过 HTML5 History
+        API 进行更新。浏览器通过 AJAX 请求向服务器检索新页面所需的数据（通常采用 JSON 格式）。然后，SPA 通过 JavaScript 来动态更新页面，这些 JavaScript
+        在初始页面加载时已经下载。这种模式类似于原生移动应用的工作方式。
+    </p>
+
+    <script>
+        const input = document.querySelector('input');
+        setTimeout(() => {
+            console.log(input.getAttribute('value')); // Hello
+            console.log(input.value); // Hello
+        }, 5000)
+    </script>
+</body>
+
+</html>
