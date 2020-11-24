@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        function t() {
+            function a() {
+                setTimeout(() => {
+                    console.log('a');
+                }, Math.random() * 1000)
+            }
+            function b() {
+                setTimeout(() => {
+                    console.log('b');
+                }, Math.random() * 1000)
+            }
+            a();
+            b();
+        }
+        // t();
+
+        function f() {
+            function a() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve('a')
+                    }, Math.random() * 1000)
+                })
+            }
+            function b() {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve('b')
+                    }, Math.random() * 1000)
+                })
+            }
+            a().then((r) => {
+                console.log(r, '1');
+                return b(); //return 关键字必填
+            }).then((r) => {
+                console.log(r, '2')
+            })
+
+        }
+        // f();
+
+        const delay = (ms, n) => new Promise(resolve => {
+            console.log(n, '======')
+            setTimeout(resolve, ms)
+        });
+        // (async function loop() {
+        //     for (let i = 0; i < 10; i++) {
+        //         await delay(Math.random() * 1000, i);
+        //         // console.log(i);
+        //     }
+
+        // })();
+
+        //async await实现顺序执行
+        async function loop() {
+            for (let i = 0; i < 10; i++) {
+                await delay(Math.random() * 1000, i);
+                // console.log(i);
+            }
+
+        }
+        // loop();
+
+        //promise 实现顺序执行
+        function promiseFn() {
+            let p = Promise.resolve();
+            for (let i = 0; i < 10; i++) {
+                p = p.then(_ => new Promise(resolve =>
+                    setTimeout(function () {
+                        console.log(i, 'promise...');
+                        resolve();
+                    }, Math.random() * 1000)
+                ));
+            }
+        }
+        promiseFn();
+
+    </script>
+</body>
+
+</html>
