@@ -75,7 +75,8 @@
 
         //promise 实现顺序执行
         function promiseFn() {
-            let p = Promise.resolve();
+            // let p = Promise.resolve();
+            let p = new Promise(resolve => resolve());
             for (let i = 0; i < 10; i++) {
                 p = p.then(_ => new Promise(resolve =>
                     setTimeout(function () {
