@@ -75,9 +75,10 @@
 
         //promise 实现顺序执行
         function promiseFn() {
-            let p = Promise.resolve();
+            // let p = Promise.resolve();
+            let p = new Promise(resolve => resolve()); //定义的promise对象，p.then()每次调用赋值给p，以便链式调用
             for (let i = 0; i < 10; i++) {
-                p = p.then(_ => new Promise(resolve =>
+                p = p.then(_ => new Promise(resolve => //每次返回 Promise对象
                     setTimeout(function () {
                         console.log(i, 'promise...');
                         resolve();
@@ -86,7 +87,6 @@
             }
         }
         promiseFn();
-
     </script>
 </body>
 
