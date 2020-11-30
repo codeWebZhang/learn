@@ -51,10 +51,6 @@
         }
         // f();
 
-        const delay = (ms, n) => new Promise(resolve => {
-            console.log(n, '======')
-            setTimeout(resolve, ms)
-        });
         // (async function loop() {
         //     for (let i = 0; i < 10; i++) {
         //         await delay(Math.random() * 1000, i);
@@ -63,10 +59,13 @@
 
         // })();
 
+        const delay = ms => new Promise(resolve => {
+            setTimeout(resolve, ms)
+        });
         //async await实现顺序执行
         async function loop() {
             for (let i = 0; i < 10; i++) {
-                await delay(Math.random() * 1000, i);
+                await delay(Math.random() * 1000);
                 // console.log(i);
             }
 

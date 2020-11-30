@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>
+
+        构造函数必须使用new操作符才会产生实例、直接调用不会产生实例
+    </h1>
+    <h1>
+        Object,Array是可以省略 new操作符 直接调用可以产生实例
+    </h1>
+
+    <script>
+        // class A {
+        //     a;
+        //     constructor(p) {
+        //         this.a = p;
+        //     }
+        // }
+
+        // class B {
+        //     b;
+        //     constructor(t) {
+        //         this.b = t;
+        //     }
+        // }
+
+        //class不使用new 操作符报错的es5实现
+        // function myNew(fn) {
+        //     let O = Object.create(fn.prototype);
+        //     let S = fn.apply(O);
+        //     return typeof S === 'object' ? S : O;
+        // }
+        // // let c = myNew(11);
+        // let a = new A(11);
+
+        // // let b = A(11);
+        // console.log(a, '==')
+
+
+        // function C(c) {
+        //     this.c = c;
+        // }
+        // function D(d) {
+        //     this.d = d;
+        // }
+        // let e = new C(5);
+        // let f = D(5);
+        // console.log(e, '----', f)
+
+        // let o = new Object({ name: "h" });
+        // let h = Object({ name: "h" });
+        // // console.log(o, '===', h)
+
+
+
+        // const newMap = new Map();
+        // function set(c, arg) {
+        //     newMap.set('a', { c, arg });
+        // }
+        // // set(A, 99);
+
+        // function get() {
+        //     const target = newMap.get("a");
+        //     console.log(target, 'target...')
+        //     const { c, arg } = target;
+        //     const inst = Reflect.construct(c, [arg]);
+        //     console.log(inst, 'inst...')
+        // }
+        // const getParam = get();
+        // console.log(getParam, 'param....')
+
+        // container.ts
+        class Container {
+            bindMap = new Map();
+
+            // 实例的注册
+            bind(identifier, clazz, constructorArgs) {
+                this.bindMap.set(identifier, {
+                    clazz,
+                    constructorArgs
+                });
+            }
+
+            // 实例的获取
+            get(identifier) {
+                const target = this.bindMap.get(identifier);
+                const { clazz, constructorArgs } = target;
+                //Reflect.construct相当于 new Class， 注意此实例 调用container.bind()必须传递3个参数
+                const inst = Reflect.construct(clazz, constructorArgs);
+                return inst;
+            }
+        }
+
+        // b.ts
+        class B {
+            constructor(p) {
+                this.p = p;
+            }
+        }
+
+        // a.ts
+        class A {
+            b;
+            constructor() {
+                console.log('ttt...ttt');
+                this.b = container.get('b');
+                console.log(container.get('b'), 'bbb..bb')
+            }
+        }
+
+        // main.ts
+        const container = new Container();
+        container.bind('b', B, [10]);
+        container.bind('a', A, [1]);
+        // 从容器中取出a
+        const a = container.get('a');
+        console.log(a, 'render...a..'); // A => { b: B { p: 10 } }
+
+
+
+    </script>
+</body>
+
+</html>
