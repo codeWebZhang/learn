@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function test() {
+            for (let i = 1; i < 10; i++) {
+                let char = ""
+                for (j = 1; j <= i; j++) {
+                    char += j + "*" + i + "=" + j * i + "\t";
+                }
+                console.log(char)
+            }
+        }
+        test();
+
+        function test1() {
+            for (let i = 9; i > 0; i--) {
+                let char = ""
+                for (j = 1; j <= i; j++) {
+                    char += j + "*" + i + "=" + j * i + "\t";
+                }
+                console.log(char)
+            }
+        }
+        test1();
+        function test2() {
+            for (let i = 1; i < 10; i++) {
+                let char = ""
+                for (j = 0; j < 10; j++) {
+                    char += j < (10 - i) ? " " : "*";
+                }
+                console.log(char)
+            }
+        }
+        test2(9);
+
+        function test3() {
+            for (let i = 9; i > 0; i--) {
+                let char = ""
+                for (j = 9; j >= i; j--) {
+                    char += j + "*" + i + "=" + j * i + "\t";
+                }
+                console.log(char)
+            }
+        }
+        test3();
+        function z() {
+            for (i = 0; i < 10; i++) {
+                console.log("1" + "\n")
+            }
+        }
+        z();
+    </script>
+</body>
+
+</html>

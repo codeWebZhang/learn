@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var arr = [2, 3, 1, 6, 11, 8, 18];
+
+        for (let i = 0; i < arr.length - 1; i++) {
+            for (let j = 0; j < arr.length - i; j++) {
+                let first = arr[j];
+                let two = arr[j + 1];
+                if (first > two) {
+                    arr[j + 1] = first;
+                    arr[j] = two;
+                }
+            }
+        }
+        console.log(arr, 'arr..');
+
+        var arr =[1,2,3]
+        arr.concat(4,5);
+        console.log(arr,'输出结果');
+
+    </script>
+</body>
+
+</html>
