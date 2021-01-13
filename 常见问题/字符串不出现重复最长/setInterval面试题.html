@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h5>
+      写一个 mySetInterVal(fn, a, b),每次间隔 a,a+b,a+2b,...,a+nb
+      的时间，然后写一个 myClear，停止上面的 mySetInterVal
+    </h5>
+    <script>
+      function mySetiterVal(fn, a, b) {
+        this.a = a;
+        this.b = b;
+        this.time = 0;
+        this.handle = -1;
+        this.start = () => {
+          this.handle = setTimeout(() => {
+            fn();
+            this.time++;
+            this.start();
+            console.log(this.a + this.time * this.b);
+          }, this.a + this.time * this.b);
+        };
+        this.stop = () => {
+          clearTimeout(this.handle);
+          this.time = 0;
+        };
+      }
+      let a = new mySetiterVal(
+        () => {
+          console.log();
+        },
+        1000,
+        2000
+      );
+      a.start();
+      a.stop();
+    </script>
+  </body>
+</html>

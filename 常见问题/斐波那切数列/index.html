@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>斐波那切数列</h1>
+    <script>
+      // function fn(n) {
+      //   if (n == 1) {
+      //     return 1;
+      //   }
+      //   if (n == 2) return 2;
+      //   return fn(n - 1) + fn(n - 2);
+      // }
+      // console.log(fn(5));
+      let fib1 = (() => {
+        let memory = {};
+        return (n) => {
+          if (n === 1 || n === 0) {
+            return n;
+          }
+          if (memory[n - 1] === undefined) {
+            memory[n - 1] = fib1(n - 1);
+          }
+          if (memory[n - 2] === undefined) {
+            memory[n - 2] = fib1(n - 2);
+          }
+          // console.log(memory, 'memory...');
+          return (memory[n] = memory[n - 1] + memory[n - 2]);
+        };
+      })();
+      let fib2 = (() => {
+        let memory = [];
+        return (n) => {
+          if (n === 1 || n === 0) {
+            return n;
+          }
+          if (memory[n - 1] === undefined) {
+            memory[n - 1] = fib2(n - 1);
+          }
+          if (memory[n - 2] === undefined) {
+            memory[n - 2] = fib2(n - 2);
+          }
+          return (memory[n] = memory[n - 1] + memory[n - 2]);
+        };
+      })();
+
+      function speed(n, fn) {
+        let start = performance.now();
+        fn(n);
+        let end = performance.now();
+        console.log(end - start, 'time...');
+      }
+      console.log(speed(5000, fib1));
+      console.log(speed(5000, fib2));
+    </script>
+  </body>
+</html>

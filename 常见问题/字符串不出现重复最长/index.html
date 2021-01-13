@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let strLen = (origin) => {
+        let arr = [];
+        let length = 0;
+        for (let i of origin) {
+          if (arr.includes(i)) {
+            let index = arr.indexOf(i);
+            arr.splice(0, index + 1);
+          }
+          arr.push(i);
+          length = length > arr.length ? length : arr.length;
+        }
+        return length;
+      };
+      console.log(strLen('abcabcbb'));
+
+      //2.
+      var lengthOfLongestSubstring = function (s) {
+        let index = 0,
+          max = 0;
+        for (let i = 0, j = 0; j < s.length; j++) {
+          index = s.substring(i, j).indexOf(s[j]);
+          if (index !== -1) {
+            i = i + index + 1;
+          }
+          max = Math.max(max, j - i + 1);
+        }
+        return max;
+      };
+      console.log(lengthOfLongestSubstring('abcabcbb'));
+    </script>
+  </body>
+</html>
