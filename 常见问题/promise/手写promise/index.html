@@ -107,7 +107,7 @@
                   throw err;
                 };
           // 每次调用 then 都返回一个新的 promise  Promise/A+ 2.2.7
-          let promise2 = new Promise((resolve, reject) => {
+          let promise2 = new PromiseA((resolve, reject) => {
             if (this.status === FULFILLED) {
               //Promise/A+ 2.2.2
               //Promise/A+ 2.2.4 --- setTimeout
@@ -190,7 +190,7 @@
               resolve('custom...');
             }, 1000);
           });
-          return p;
+          return p; 
         })
         .then()
         .then((value) => {

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h5>发布、订阅</h5>
+    <script>
+      class EventEmitter {
+        constructor() {
+          // 初始值为空对象
+          this.listeners = Object.create(null);
+        }
+
+        // 注册事件
+        on = (event, listener) => {
+          // this.bindEvent(event, listener, false)
+          if (!event || !listener) {
+            return;
+          }
+          if (this.listeners[event]) {
+            //如果有就放一个新的
+            this.listeners[event].push(listener);
+          } else {
+            //如果没有就创建一个数组
+            this.listeners[event] = [listener];
+          }
+        };
+
+        // 只订阅一次
+        once = (event, listener) => {
+          // this.bindEvent(event, listener, true)
+          function one() {
+            // 在one函数运行原来的函数，只有将one清空
+            listener.apply(this);
+            // 先绑定 执行后再删除
+            this.off(event, one);
+          }
+          this.on(event, one);
+          //此时emit触发会执行此函数，会给这个函数传递rest参数
+        };
+
+        // 发布事件
+        emit = (event, ...args) => {
+          if (!this.hasBind(event)) {
+            console.warn(`this event: ${event} don't has bind listener.`);
+            return;
+          }
+
+          this.listeners[event].forEach((listener) =>
+            listener.call(this, ...args)
+          );
+        };
+
+        // 取消订阅
+        off = (event, listener) => {
+          if (!this.hasBind(event)) {
+            console.warn(`this event: ${event} don't exist.`);
+            return;
+          }
+
+          // remove all listener
+          if (!listener) {
+            delete this.listeners[event];
+            return;
+          }
+          // remove specific listener
+          this.listeners[event] = this.listeners[event].filter(
+            (item) => item !== listener
+          );
+        };
+
+        hasBind = (event) => {
+          return this.listeners[event] && this.listeners[event].length;
+        };
+      }
+
+      const test = new EventEmitter();
+
+      const test1 = test.on('console', () => console.log('123'));
+      const test2 = test.on('console', () => console.log('456'));
+      const test3 = test.on('console1', () => console.log('789'));
+      const test4 = test.once('console', () => console.log('098'));
+      console.log(test.listeners, 'listteners');
+
+      // 第一次
+      test.emit('console', null);
+      // 123
+      // 456
+      // 789
+      console.log(test.listeners, 'two..');
+      // 第二次
+      test.emit('console', null);
+      // 123
+      // 456
+
+      // 第三次
+      test.off(test2);
+      test.emit('console', null);
+      test.emit('console1', null);
+    </script>
+  </body>
+</html>

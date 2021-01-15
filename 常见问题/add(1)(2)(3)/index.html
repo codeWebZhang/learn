@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const curry = (fn) =>
+        (judge = (...args) =>
+          args.length === fn.length
+            ? fn(...args)
+            : (...arg) => judge(...args, ...arg));
+      const add = (a, b, c) => a + b + c;
+      const curryAdd = curry(add);
+      // console.log(curryAdd(1)(2)(3)); // 6
+      // console.log(curryAdd(1, 2)(3)); // 6
+      // console.log(curryAdd(1)(2, 3)); // 6
+
+      //
+      function add1(a) {
+        return function (b) {
+          return function (c) {
+            return a + b + c;
+          };
+        };
+      }
+      // console.log(add1(1)(2)(3)); // 6
+      // 前面两次调用每次返回一个新函数，第三次调用后满足参数长度要求然后执行函数。
+
+      // 这时候我们再来看 currying 实现函数，其实就是判断当前参数长度够不够，参数够了就立马执行，不够就返回一个新函数，这个新函数并不执行，并且通过 bind 或者闭包保存之前传入的参数。
+
+      // 1.参数固定版本
+      function currying(fn, length) {
+        console.log(fn.length, 'fn...');
+        length = length || fn.length; // 注释 1
+        return function (...args) {
+          // 注释 2
+          return args.length >= length // 注释 3
+            ? fn.apply(this, args) // 注释 4
+            : currying(fn.bind(this, ...args), length - args.length); // 注释 5
+        };
+      }
+      const curryAdd1 = currying(add);
+      console.log(curryAdd1(1)(2)(3)); // 6
+      // console.log(curryAdd1(1, 2)(3)); // 6
+      // console.log(curryAdd1(1)(2, 3)); // 6
+
+      //2.参数不固定版本 正解
+      function add2(...args) {
+        //求和
+        return args.reduce((a, b) => a + b);
+      }
+
+      function currying(fn) {
+        let args = [];
+        return function temp(...newArgs) {
+          if (newArgs.length) {
+            args = [...args, ...newArgs];
+            return temp;
+          } else {
+            let val = fn.apply(this, args);
+            args = []; //保证再次调用时清空
+            return val;
+          }
+        };
+      }
+
+      let addCurry = currying(add2);
+      console.log(addCurry(1)(2)(3)(4, 5)()); //15
+      console.log(addCurry(1)(2)(3, 4, 5)()); //15
+      console.log(addCurry(1)(2, 3, 4, 5)()); //15
+
+      function addArguments(arg1, arg2, arg3) {
+        return arg1 + arg2 + arg3;
+      }
+
+      var addThirtySeven = addArguments.bind(null, 37);
+      addThirtySeven = addThirtySeven.bind(null, 1);
+
+      // console.log(addThirtySeven, 'addThirtySeven...');
+      var result = addThirtySeven(5);
+      console.log(result, 'result...');
+    </script>
+
+    <script>
+      //bind 模拟实现
+      //         通过上述代码可以看出 bind 有如下特性：
+      //         1、指定 this
+      //   2、传入参数
+      //   3、返回一个函数
+      //   4、柯里化
+      //
+      Function.prototype.bind = function (context) {
+        // 调用 bind 的不是函数，需要抛出异常
+        if (typeof this !== 'function') {
+          throw new Error(
+            'Function.prototype.bind - what is trying to be bound is not callable'
+          );
+        }
+
+        // this 指向调用者
+        var self = this;
+        // 实现第2点，因为第1个参数是指定的this,所以只截取第1个之后的参数
+        var args = Array.prototype.slice.call(arguments, 1);
+
+        // 实现第3点,返回一个函数
+        return function () {
+          // 实现第4点，这时的arguments是指bind返回的函数传入的参数
+          // 即 return function 的参数
+          var bindArgs = Array.prototype.slice.call(arguments);
+          // 实现第1点
+          return self.apply(context, args.concat(bindArgs));
+        };
+      };
+    </script>
+  </body>
+</html>

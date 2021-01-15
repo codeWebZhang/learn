@@ -16,6 +16,15 @@
       //   return fn(n - 1) + fn(n - 2);
       // }
       // console.log(fn(5));
+
+      let fib = (n) => {
+        if (n === 1 || n == 2) {
+          return 1;
+        }
+        return fib(n - 1) + fib(n - 2);
+      };
+
+      //函数记忆法
       let fib1 = (() => {
         let memory = {};
         return (n) => {
@@ -54,8 +63,9 @@
         let end = performance.now();
         console.log(end - start, 'time...');
       }
-      console.log(speed(5000, fib1));
-      console.log(speed(5000, fib2));
+      console.log(speed(40, fib));
+      console.log(speed(40, fib1));
+      console.log(speed(40, fib2));
     </script>
   </body>
 </html>

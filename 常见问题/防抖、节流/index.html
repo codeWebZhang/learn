@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="button" id="btn" value="fang dou" οnclick="test()" />
+    <div>
+      原生js只能通过
+      element.addElementListener()注册点击事件，内联元素onclick="test()"不能被触发
+    </div>
+    <button id="throttle">节流</button>
+    <button id="throttle1">时间戳节流</button>
+    <script>
+      //原理：在事件被触发n妙后再执行回调，如果在这n秒内又被触发，则重新计时
+
+      function debounce(func, wait) {
+        let timeout;
+        return function () {
+          const context = this;
+          const args = arguments;
+          const a = clearTimeout(timeout);
+          console.log(a, 'a...');
+          timeout = setTimeout(function () {
+            func.apply(context, args);
+          }, wait);
+        };
+      }
+      document
+        .getElementById('btn')
+        .addEventListener('click', debounce(test, 1000), false);
+
+      //坑1 写法错误
+      // document.getElementById('btn').addEventListener(
+      //   'click',
+      //   function () {
+      //     debounce(test, 1000)();
+      //   },
+      //   false
+      // );
+      // var btn = document.getElementById('btn');
+      // btn.οnclick = function () {
+      //   console.log('hello world');
+      // };
+      function test() {
+        console.log('click');
+      }
+
+      //节流：规定在一个单位时间内，只能触发一次函数，如果这个单位时间内触发多次函数，只有一次生效
+      //定时器实现
+      function throttle(fn, wait) {
+        let time;
+        return function () {
+          if (time) return;
+          let context = this;
+
+          time = setTimeout(() => {
+            fn.call(context, arguments);
+            time = null;
+          }, wait);
+        };
+      }
+      function testA() {
+        console.log('throttle...');
+      }
+      document
+        .getElementById('throttle')
+        .addEventListener('click', throttle(testA, 1000));
+
+      //时间戳实现
+      function throttle1(fn, wait) {
+        let pre = 0;
+        return function () {
+          let context = this;
+          let now = +new Date();
+          if (now - pre > wait) {
+            fn.call(context, arguments);
+            pre = now;
+          }
+        };
+      }
+      document
+        .getElementById('throttle1')
+        .addEventListener('click', throttle1(testA, 2000));
+
+      function add(a) {
+        return function (b) {
+          return function (c) {
+            console.log(a + b + c, 'cc');
+          };
+        };
+      }
+      add(1)(2)(3);
+      const curry = (fn) => {
+        console.log(fn.length, 'lengtyh');
+      };
+      curry(add);
+    </script>
+  </body>
+</html>
