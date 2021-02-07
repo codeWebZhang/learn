@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let obj ={
+      name:"z"
+    }
+    let obj1= {
+      name:"l",
+      say:function(name){
+        console.log(name);
+      }
+    }
+    Function.prototype.myCall = function(context){
+      let fn = new Date().getTime();
+      context[fn]=this;
+      let arg = [...arguments].slice(1)
+      context[fn](...arg);
+      console.log(arg,'---',...arg)
+      delete obj[fn];
+    }
+    
+    obj1.say.myCall(obj,'hahah')
+  </script>
+</body>
+</html>

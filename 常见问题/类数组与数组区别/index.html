@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    1.定义： 
+      数组是一个特殊对象，与常规对象区别：
+        a. 当由新元素添加到列表时，自动更新length属性
+        b. 设置length属性，可以截取数组
+        c. 从Array.prototype中继承方法
+        d. 属性为 'Array'
+      类数组是一个拥有length属性，并且他属性为非负整数的普通对象，类数组不能直接调用数组方法
+
+  </div>
+  <script>
+    // 原型关系和原始值转换
+    let arrayLike = {
+        length: 10,
+    };
+    console.log(arrayLike instanceof Array); // false
+    console.log(arrayLike.__proto__.constructor === Array); // false
+    console.log(arrayLike.toString()); // [object Object]
+    console.log(arrayLike.valueOf()); // {length: 10}
+
+    let array = [];
+    console.log(array instanceof Array); // true
+    console.log(array.__proto__.constructor === Array); // true
+    console.log(array.toString()); // ''
+    console.log(array.valueOf()); // []
+  </script>
+  <script>
+    let arrayLike2 = {
+      length: 2,
+      push: Array.prototype.push
+    }
+
+    // push 操作在length基础上add，比如length为2，push操作会从第三个元素，即索引2的位置添加
+    arrayLike2.push(1);
+    console.log(arrayLike2); // {2: 1, 3: 4, length: 3, push: ƒ}
+    arrayLike2.push(2);
+    console.log(arrayLike2); // {2: 1, 3: 2, length: 4, push: ƒ}
+  </script>
+</body>
+</html>

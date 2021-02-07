@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    // const list =[1,2,3];
+    // const squere =num=>{
+    //   setTimeout(()=>{
+    //     console.log(num);
+    //   },1000)
+    // }
+    // function test(){
+    //   for(let i =0;i<list.length;i++){
+    //     ((j)=>{
+    //       squere(list[j])
+    //     })(i)
+    //   }
+    // }
+    // function test(){
+    //   for(let i =0;i<list.length;i++){
+    //     (async (j)=>{
+    //       await squere(list[j])
+    //     })(i)
+    //   }
+    // }
+    // test();
+
+  // function test1(){
+  //   for (var i = 0; i < 10; i++) {
+  //     (function(j){//闭包
+  //       setTimeout(function(){
+  //         console.log(j);//分别输出i的值
+  //       },2000*j)		
+  //     })(i);//闭包
+  //   };
+  // };
+  // test1();
+
+
+  const list = [1, 2, 3]
+const square = num => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(num * num)
+    }, 1000)
+  })
+}
+
+// 
+async function test() {
+  for (let i = 0; i < list.length; i++) {
+    let x = list[i]
+    const res = await square(x)
+    console.log(res)
+  }
+}
+test()
+  </script>
+</body>
+</html>

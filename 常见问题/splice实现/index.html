@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+   Array.prototype._splice = function (start,count,...addList){
+      if(start<0){
+        if(Math.abs(start)>this.length){
+          start=0;
+        }else{
+          start=start+this.length;
+        }
+      }
+
+      let removeList = this.slice(start,start+count);
+      let right = this.slice(start+count);
+      let addindex=start;
+      addList.concat(right).map((item,index)=>{
+        this[addindex]=item;
+        addindex++;
+      })
+      this.length = addindex;
+      return removeList;
+   }
+
+  </script>
+</body>
+</html>
