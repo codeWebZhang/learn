@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>浏览器缓存策略</h1>
+  <div>
+    浏览器每次发起请求时，先在本地缓存中查找结果及缓存标识，根据缓存标识判断是否本地缓存。
+    如果缓存有效，则使用本地缓存；否则，像服务器发起请求并携带缓存标识。
+    根据是否需要向服务器发起http请求，将缓存过程划分为两个部分：强缓存和协商缓存
+  </div>
+  <p>
+    强缓存：服务器通知浏览器一个缓存时间，在缓存时间内，直接使用缓存，不在时间内，执行协商缓存
+    协商缓存：将缓存信息中的Etag和Last-Modified通过请求发送给服务器，有服务器校验，返回304状态码时，浏览器直接使用缓存
+  </p>
+</body>
+</html>

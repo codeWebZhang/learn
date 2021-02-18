@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let arr = [5,1,2,6,7,3,99,66,345,9]
+    //冒泡排序
+    function sort1(arr){
+      if(!Array.isArray(arr)) return "不是数组";
+      for(let i =0;i<arr.length-1;i++){
+        for(let j=0;j<arr.length-i;j++){
+          let cur;
+          if(arr[j]>arr[j+1]){
+            cur =arr[j];
+            arr[j] =arr[j+1];
+            arr[j+1]=cur;
+          }
+        }
+      }
+      return arr;
+    }
+    // console.log(sort1(arr),'...');
+
+    //快速排序
+    function sort2(arr){
+      if(!Array.isArray(arr)) return "不是数组";
+      if(arr.length <2) return arr;
+      let center = Math.floor(arr.length/2);
+      let cur = arr.splice(center,1);
+      let left=[],right=[];
+      arr.map((val,index)=>{
+          if(val<cur){
+            left.push(val);
+          }else{
+            right.push(val);
+          }
+      })
+      return sort2(left).concat(cur,sort2(right))
+    }
+    // console.log(sort2(arr),'---')
+
+    //归并排序
+    function mergeSort(arr){
+      if(!Array.isArray(arr)) return 'not array';
+      if(arr.length<2){
+        return arr;
+      }
+      let mid = Math.floor(arr.length/2);
+      let left = arr.slice(0,mid);
+      let right = arr.slice(mid);
+      return merge(mergeSort(left),mergeSort(right));
+    }
+
+    function merge(left,right){
+      let temp=[];
+      while(left.length&&right.length){
+        if(left[0]>right[0]){
+          temp.push(right.shift())
+        }else{
+          temp.push(left.shift())
+        }
+      }
+      while(left.length){
+        temp.push(left.shift())
+      }
+      while(right.length){
+        temp.push(right.shift());
+      }
+      return temp;
+    }
+    // console.log(arr,'...',mergeSort(arr))
+
+    //插入排序 
+    function insertSort(arr){
+      for(let i=1;i<arr.length;i++){
+        let target=i;
+        for(let j =i-1;j>=0;j--){
+          if(arr[target]<arr[j]){
+            //角色互换
+            [arr[target],arr[j]]=[arr[j],arr[target]];
+            target=j;
+          }else{
+            break;
+          }
+        }
+      }
+      return arr;
+    }
+    console.log(arr,'insert..',insertSort(arr))
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //1.原型链继承
+    Car.prototype.money=1000;
+    function Car(){
+    }
+    let car= new Car();
+    Bycicle.prototype=car;
+    function Bycicle(){}
+    let bycicle=new Bycicle();
+    Computer.prototype=bycicle;
+    function Computer(){
+
+    }
+
+    //2.借用call实现继承
+    function Audi(from){
+      this.name="奥迪";
+      this.from=from;
+    }
+    function Tokeo(){
+      Audi.call(this,'china');
+      this.price=150000;
+    }
+
+    //3.共享原型链
+    Father.prototype.money="正无穷";
+    function Father(){}
+    function Son(){}
+    Son.prototype=Father.prototype;
+
+    //4.圣杯模式
+    Phone.prototype.screen=140;
+    function Phone(){}
+    function F(){}
+    F.prototype=Phone.prototype;
+    function Apple(){}
+    Apple.prototype= new F();
+    Apple.prototype.constructor=Apple;
+
+  </script>
+</body>
+</html>
