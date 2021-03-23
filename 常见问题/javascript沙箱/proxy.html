@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let a = 'global a';
+      const obj = {
+        // a: 1,
+        b: 2,
+        console: window.console,
+      };
+      const fn = (key) => {
+        console.log(key);
+      };
+      const proxy = new Proxy(obj, {
+        has(target, key) {
+          console.log(target, 'target');
+          console.log(key, 'key');
+          //如果返回true 阻断沿作用连向上查询；如果是false启用向上查询
+          return true;
+        },
+      });
+      with (proxy) {
+        // fn('a');
+        console.log(a);
+      }
+      console.log(proxy == obj);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    //仔细看差别
+    let origin ={name:"zhang",next:{age:99999}};
+    let newVal =origin;
+    // newVal={age:1111};
+    //或者
+    newVal=origin.next;
+    newVal.age=6666;
+    console.log(origin,'****',newVal);
+    //结论： newVal虽然保存着与origin同一指针,当newVal=any这种形式，只是把保存着的指针干掉，
+    //       并不会影响origin指针;
+    //      当newVal.age=any,由于修改同一指针，即修改同一对象，所有会影响
+
+
+    //1.
+    let a1={
+      v:0,next:{
+        v:2,next:{
+          v:3
+        }
+      }
+    };
+    let b1=a1;
+    b1=null;
+    console.log(b1,'---',a1);
+    //2.
+    let a2={
+      head:{
+        v:0,next:{
+          v:2,next:{
+            v:3
+          }
+        }
+      }
+    }
+    let b2 = a2.head;
+    b2={};
+    console.log(b2,'++++',a2)
+  </script>
+</body>
+</html>

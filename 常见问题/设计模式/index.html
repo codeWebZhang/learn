@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 迭代器设计模式
+      class Iterator {
+        constructor(container) {
+          this.list = container.list;
+          this.next = 0;
+        }
+        next() {
+          if (this.hasNext()) {
+            return this.list[this.index++];
+          }
+          return null;
+        }
+        hasNext() {
+          if (this.index >= this.list.length) {
+            return false;
+          }
+          return true;
+        }
+      }
+
+      class Container {
+        constructor(list) {
+          this.list = list;
+        }
+        getIterator() {
+          return new Iterator(this);
+        }
+      }
+
+      //测试代码
+      let container = new Container([1, 2, 3, 4, 5]);
+      let iteaarator = container.getIterator();
+      while (iteaarator.hasNext()) {
+        console.log(iteaarator.next());
+      }
+    </script>
+  </body>
+</html>

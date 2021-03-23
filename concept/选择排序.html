@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //选择排序双层遍历 每次找到最小值的index 且排在最前面
+      function selectSort(arr) {
+        for (let i = 0; i < arr.length - 1; i++) {
+          let min = i;
+          //j=i+1;不能j=i;
+          for (let j = i + 1; j < arr.length - 1; j++) {
+            if (arr[j] < arr[min]) {
+              min = j;
+            }
+          }
+          let temp = arr[i];
+          arr[i] = arr[min];
+          arr[min] = temp;
+        }
+        return arr;
+      }
+      let arr = [5, 15, 2, 55, 1, 9, 89];
+      console.log(selectSort(arr), '选择排序');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class A {
+        constructor() {
+          this.__proto__.color = 'red';
+        }
+        //实例属性
+        title = 'A';
+
+        getTitle() {
+          console.log('原型方法');
+        }
+      }
+      class B extends A {}
+      var b = new B();
+      console.log(b.title, '---', b.getTitle());
+
+      class C {
+        getName() {
+          cosnole.log('原型方法');
+        }
+      }
+      let c = new C();
+      c.__proto__.color = 'red';
+      C.prototype.age = 22;
+      console.log(c.__proto__ === C.prototype);
+    </script>
+  </body>
+</html>
+l

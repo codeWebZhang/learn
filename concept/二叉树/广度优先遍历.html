@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var str = {
+        value: 1,
+        left: {
+          value: 2,
+          left: {
+            value: 4,
+            left: {
+              value: 11,
+            },
+            right: {
+              value: 12,
+            },
+          },
+          right: {
+            value: 6,
+          },
+        },
+        right: {
+          value: 3,
+          left: {
+            value: 5,
+            left: {
+              value: 7,
+            },
+            right: {
+              value: 8,
+            },
+          },
+          right: {
+            value: 6,
+          },
+        },
+      };
+
+      function bfsBycle(tree) {
+        const queue = [];
+        const ouput = [];
+        const visitLoop = (node) => {
+          if (node) {
+            ouput.push(node.value);
+            if (node.left) {
+              queue.unshift(node.left);
+            }
+            if (node.right) {
+              queue.unshift(node.right);
+            }
+            visitLoop(queue.pop());
+          }
+        };
+        visitLoop(tree);
+        return ouput;
+      }
+      console.log('广度优先遍历', bfsBycle(str));
+
+      //非递归算法
+      function g(tree) {
+        const queue = [];
+        const outpt = [];
+        queue.push(tree);
+        while (queue.length > 0) {
+          const pop = queue.pop();
+          if (pop) {
+            outpt.push(pop.value);
+            if (pop.left) {
+              queue.unshift(pop.left);
+            }
+            if (pop.right) {
+              queue.unshift(pop.right);
+            }
+          }
+        }
+        return outpt;
+      }
+      console.log('非递归广度优先', g(str));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //中序遍历
+      //左根右
+
+      var root = {
+        val: 1,
+        left: {
+          val: 2,
+          left: {
+            val: 4,
+            left: {
+              val: 11,
+            },
+            right: {
+              val: 12,
+            },
+          },
+          right: {
+            val: 6,
+          },
+        },
+        right: {
+          val: 3,
+          left: {
+            val: 5,
+            left: {
+              val: 7,
+            },
+            right: {
+              val: 8,
+            },
+          },
+          right: {
+            val: 6,
+          },
+        },
+      };
+
+      //1.递归
+      function t(node, output = []) {
+        if (!node) {
+          return;
+        }
+        t(node.left, output);
+        output.push(node.val);
+        t(node.right, output);
+        return output;
+      }
+      console.log(t(root));
+
+      //2.非递归
+      function t1(node) {
+        if (!node) {
+          return;
+        }
+        let stack = [];
+        let current = node;
+        let result = [];
+        while (current || stack.length) {
+          while (current) {
+            stack.push(current);
+            current = current.left;
+          }
+          let item = stack.pop();
+          result.push(item.val);
+          if (item && item.right) {
+            current = item.right;
+          }
+        }
+        return result;
+      }
+      console.log(t1(root), '非递归');
+    </script>
+  </body>
+</html>

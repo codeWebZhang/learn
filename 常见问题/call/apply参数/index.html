@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    name = "global";
+    var obj ={
+      name:"inner",
+      inner:function(arg){
+        console.log(this.name+arg)
+      }
+    }
+    console.log(obj.inner('ahha'))
+    console.log(obj.inner.call('第一个参数省略了'))
+  </script>
+</body>
+</html>

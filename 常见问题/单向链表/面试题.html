@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+      function changeObjProperty(o){
+        o.url ="http://github.com";
+        o=new Object();
+        o.url="改变了";
+      }
+      let websilt = new Object();
+      changeObjProperty(websilt);
+      console.log(websilt.url,'--')
+
+      var a ={},b={key:"123"},c={key:"456"};
+      a[b]='b';
+      a[c]='c';
+      console.log(a[b],'--',a)
+
+      let d={};
+      let z1={},z2={age:11},z3=[],z4=new Object();
+      d[z1]=1;
+      d[z2]=2;
+      d[z3]=3;
+      d[z4]=4;
+      console.log(d,'dd.')
+
+      var g1={},g2=Symbol('123'),g3=Symbol('123');
+      g1[g2]='b';
+      g1[g3]='c';
+      console.log(g1[g2],'g1..',g1[g3])
+
+
+      var h1={},h2='123',h3=123;
+      h1[h2]='b';
+      h1[h3]='c';
+      console.log(h1[h2],'h1...',h1[h3])
+
+      var q1={n:1};
+      var q2=q1;
+      q1.x=q1={n:2};
+      console.log(q1.x,'xxxx',q2.x)
+
+
+      var j =10;
+      (function j(){
+        j=20;
+        console.log(j,'inner')
+      })()
+      console.log(j,'out')
+      //原因
+      //       作用域：执行上下文中包含作用于链：
+      // 在理解作用域链之前，先介绍一下作用域，作用域可以理解为执行上下文中申明的变量和作用的范围；包括块级作用域/函数作用域；
+      // 特性：声明提前：一个声明在函数体内都是可见的，函数声明优先于变量声明；
+      // 在非匿名自执行函数中，函数变量为只读状态无法修改；
+  
+  </script>
+</body>
+</html>

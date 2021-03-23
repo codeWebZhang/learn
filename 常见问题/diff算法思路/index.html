@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>diff算法思路、策略</h1>
+
+  <div>
+    1.Web UI中DOM节点跨层级移动较少，react对树的算法进行的简洁的优化，既对
+      树进行分层比较，两棵树只会对同一层次的节点进行比较。
+    2. 组件比较：如果是同类型的组件，按照原有策略比较虚拟dom即可、
+               如果是不同类型组件，则判断组件为dirtycomponent，从而替换整个组件下所有组件
+               如果是同类型组件，虚拟dom没发生任何变化，则节省了大量diff运算时间
+    3.元素比较。当节点处于同一层级时，diff提供了3种节点操作
+              1).插入(INSERT_MARKUP):新的组件类型不在旧集合里
+              2).移动 (MOVE_EXISTING):旧集合中有新组件类型，且element是可更新的类型，
+              generateComponentChildren已调用receiveComponent，这种情况下prevChild=nextChid,
+              就需要移动操作，可以复用以前的dom节点。
+              3.删除(REMOVE_NODE)：旧组件类型，在新集合里也有，但对应element不同则不能直接复用和更新。
+              需要执行删除操作，或者旧组件不在新集合里，也需要执行删除操作
+  </div>
+</body>
+</html>

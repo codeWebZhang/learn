@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //async/await 是一个自执行的generate函数 利用generate函数特性把异步代码写成 同步 的形式
+    var fetch = require("node-fetch");
+    function *fen(){
+      let url ='http://google.com';
+      let result = yield fetch(url);
+    }
+    let data = fen();
+    let result = data.next();
+    result.value.then(data=>).then();
+  </script>
+</body>
+</html>

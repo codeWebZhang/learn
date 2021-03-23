@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function test() {
+        let count = 0;
+        console.log('outer....');
+        function back() {
+          //由于back函数是在count<10条件下 递归 ，所以不会造成无限死循环
+          if (count < 10) {
+            console.log('...count。。。');
+            count++;
+            back();
+          }
+          console.log('inner...');
+        }
+        console.log('-----');
+        back();
+        console.log('++++=');
+      }
+      test();
+
+      //b会无限死循环
+      function a() {
+        function b() {
+          console.log('执行bbb');
+          b();
+        }
+        b();
+      }
+      a();
+    </script>
+  </body>
+</html>

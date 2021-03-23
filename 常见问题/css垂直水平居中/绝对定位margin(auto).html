@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      body {
+        height: 100vh;
+      }
+      .warp {
+        position: relative;
+        background-color: orange;
+        height: 100%;
+        /* width: 200px; */
+        /* height: 200px; */
+      }
+      .example3 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: red;
+        width: 100px;
+        height: 100px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- div使用绝对布局，设置margin:auto;并设置top、left、right、bottom的值相等即可，不一定要都是0 -->
+    <div class="warp">
+      <div class="example3">居中显示</div>
+    </div>
+  </body>
+</html>

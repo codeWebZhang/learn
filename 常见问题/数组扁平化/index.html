@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    //1.for循环
+    let a=[1,2,[3,[4,5,{name:"zhang"}]]];
+    function flat1(arr){
+      let res=[];
+      for(let i=0;i<arr.length;i++){
+        if(Array.isArray(arr[i])){
+          res=res.concat(flat1(arr[i]))
+        }else{
+          res.push(arr[i]);
+        }
+      }
+      return res;
+    }
+    console.log(flat1(a));
+
+    //2.reduce实现
+    let b=[1,2,[3,[4,5,{name:"zhang"}]]];
+    function flat2(arr){
+      return arr.reduce((item,next)=>{
+        return item.concat(Array.isArray(next)?flat2(next):next);
+      },[])
+    }
+    console.log(flat2(b))
+
+    //3.tostring实现
+    // let c=[1,2,[3,[4,5,{name:"zhang"}]]];
+    let c=[1,2,[3,[4,5,[6]]]];
+    function flat3(arr){
+      return arr.toString().split(",").map(item=>+item);
+    }
+    console.log(flat3(c))
+  </script>
+</body>
+</html>

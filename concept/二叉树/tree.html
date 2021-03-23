@@ -16,9 +16,9 @@
       }
 
       Node.prototype = {
-        show: function() {
+        show: function () {
           console.log(this.data);
-        }
+        },
       };
 
       function Tree() {
@@ -26,7 +26,7 @@
       }
 
       Tree.prototype = {
-        insert: function(data) {
+        insert: function (data) {
           var node = new Node(data, null, null);
           if (!this.root) {
             this.root = node;
@@ -50,7 +50,7 @@
               }
             }
           }
-        }
+        },
       };
       var t = new Tree();
       t.insert(3);
@@ -63,8 +63,7 @@
 
       //中序遍历
       //递归实现
-      var inorderTranersal = function(root, array = []) {
-        debugger;
+      var inorderTranersal = function (root, array = []) {
         if (root) {
           inorderTranersal(root.left, array);
           array.push(root.value);
@@ -80,35 +79,35 @@
           left: {
             value: 4,
             left: {
-              value: 11
+              value: 11,
             },
             right: {
-              value: 12
-            }
+              value: 12,
+            },
           },
           right: {
-            value: 6
-          }
+            value: 6,
+          },
         },
         right: {
           value: 3,
           left: {
             value: 5,
             left: {
-              value: 7
+              value: 7,
             },
             right: {
-              value: 8
-            }
+              value: 8,
+            },
           },
           right: {
-            value: 6
-          }
-        }
+            value: 6,
+          },
+        },
       };
 
       //非递归实现
-      var inorderTravel = function(root) {
+      var inorderTravel = function (root) {
         var result = [];
         var stack = [];
         var current = root;
@@ -123,11 +122,11 @@
         }
         return result;
       };
-      console.log("中序遍历", inorderTravel(str), inorderTranersal(str, []));
+      console.log('中序遍历', inorderTravel(str), inorderTranersal(str, []));
 
       //前序遍历
       //
-      var preorderTraversal = function(root, array = []) {
+      var preorderTraversal = function (root, array = []) {
         if (root) {
           array.push(root.value);
           preorderTraversal(root.left, array);
@@ -137,7 +136,7 @@
       };
 
       //非递归
-      var preorderTravers = function(root) {
+      var preorderTravers = function (root) {
         const result = [];
         const stack = [];
         let current = root;
@@ -153,11 +152,11 @@
         return result;
       };
 
-      console.log("前序遍历", preorderTraversal(str, []), preorderTravers(str));
+      console.log('前序遍历', preorderTraversal(str, []), preorderTravers(str));
 
       //后续遍历
       //
-      var postorderTraversal = function(root, array = []) {
+      var postorderTraversal = function (root, array = []) {
         if (root) {
           postorderTraversal(root.left, array);
           postorderTraversal(root.right, array);
@@ -167,7 +166,7 @@
       };
 
       //非递归
-      var postorderTravers = function(root) {
+      var postorderTravers = function (root) {
         const result = [];
         const stack = [];
         let last = null; // 标记上一个访问的节点
@@ -190,10 +189,32 @@
         return result;
       };
       console.log(
-        "后续遍历",
+        '后续遍历',
         postorderTraversal(str, []),
         postorderTravers(str)
       );
+
+      //前序遍历
+      function drl(root) {
+        var arr = [],
+          res = [];
+        if (root != null) {
+          arr.push(root);
+        }
+        while (arr.length != 0) {
+          var temp = arr.pop();
+          res.push(temp.value);
+          //这里先放右边再放左边是因为取出来的顺序相反
+          if (temp.right != null) {
+            arr.push(temp.right);
+          }
+          if (temp.left != null) {
+            arr.push(temp.left);
+          }
+        }
+        return res;
+      }
+      console.log(drl(str), '前序遍历');
     </script>
   </body>
 </html>
