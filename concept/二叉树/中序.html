@@ -59,12 +59,9 @@
 
       //2.非递归
       function t1(node) {
-        if (!node) {
-          return;
-        }
+        let result = [];
         let stack = [];
         let current = node;
-        let result = [];
         while (current || stack.length) {
           while (current) {
             stack.push(current);

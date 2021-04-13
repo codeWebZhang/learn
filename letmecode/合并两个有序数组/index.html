@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=\, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <p>
-        给你两个有序的整数数组nums1和nums2，请你将nums2合并到nums1中，使nums1成为一个有序数组
+      给你两个有序的整数数组nums1和nums2，请你将nums2合并到nums1中，使nums1成为一个有序数组
     </p>
     <p>
-        解题思路：从下标 m+n-1 的位置填充nums1，比较nums1, 比较nums1[len1] 与 numns[len2]的大小，将最大值写入写入nums1[len],即
-        nums1[len1]>=nums2[len2], nums1[len--] = nums1[len1--], 这里 --是因为写入成功后，下标自动建议， 继续前往比较
-        否则， nums1[len--] = nums2[len2--]
+      解题思路：从下标 m+n-1 的位置填充nums1，比较nums1, 比较nums1[len1] 与
+      numns[len2]的大小，将最大值写入写入nums1[len],即 nums1[len1]>=nums2[len2],
+      nums1[len--] = nums1[len1--], 这里 --是因为写入成功后，下标自动减一，
+      继续前往比较 否则， nums1[len--] = nums2[len2--]
     </p>
 
     <script>
-        var merge = function (nums1, m, nums2, n) {
-            let len1 = m - 1,
-                len2 = n - 1,
-                len = m + n - 1;
-            while (len2 >= 0) {
-                if (len1 < 0) {
-                    nums1[len--] = nums2[len2--]
-                    continue;
-                }
-                nums1[len--] = nums1[len1] >= nums2[len2] ? nums1[len1--] : nums2[len2--]
-            }
+      var merge = function (nums1, m, nums2, n) {
+        let len1 = m - 1,
+          len2 = n - 1,
+          len = m + n - 1;
+        while (len2 >= 0) {
+          //当num1数组的值全部大于 num2的数组的值 就会出现死循环
+          if (len1 < 0) {
+            nums1[len--] = nums2[len2--];
+            continue;
+          }
+          nums1[len--] =
+            nums1[len1] >= nums2[len2] ? nums1[len1--] : nums2[len2--];
         }
-        let nums1 = [1, 2, 3];
-        let nums2 = [2, 5, 6]
-        let result = merge(nums1, 3, nums2, 3)
-        console.log(result, 'result', nums1)
+      };
+      let nums1 = [1, 2, 3];
+      let nums2 = [4, 5, 6];
+      let result = merge(nums1, 3, nums2, 3);
+      console.log(result, 'result', nums1);
     </script>
-</body>
-
+  </body>
 </html>

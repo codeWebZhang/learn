@@ -79,27 +79,39 @@
 
       const test = new EventEmitter();
 
-      const test1 = test.on('console', () => console.log('123'));
-      const test2 = test.on('console', () => console.log('456'));
-      const test3 = test.on('console1', () => console.log('789'));
-      const test4 = test.once('console', () => console.log('098'));
-      console.log(test.listeners, 'listteners');
+      function user1() {
+        console.log('123');
+      }
+      function user2() {
+        console.log('456');
+      }
+      function user3() {
+        console.log('789');
+      }
+      function user4() {
+        console.log('098');
+      }
+
+      const test1 = test.on('console', user1);
+      const test2 = test.on('console', user2);
+      const test3 = test.on('console1', user3);
+      const test4 = test.once('console', user4);
 
       // 第一次
       test.emit('console', null);
       // 123
       // 456
       // 789
-      console.log(test.listeners, 'two..');
-      // 第二次
+      // console.log(test.listeners, 'two..');
+      // // 第二次
       test.emit('console', null);
-      // 123
-      // 456
+      // // 123
+      // // 456
 
-      // 第三次
-      test.off(test2);
+      // // 第三次
+      test.off('console', user1);
       test.emit('console', null);
-      test.emit('console1', null);
+      // test.emit('console1', null);
     </script>
   </body>
 </html>

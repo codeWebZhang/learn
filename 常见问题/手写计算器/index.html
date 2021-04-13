@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var str = '1*33+6/2-9';
+      function newArr(str) {
+        let arr = str.split('');
+        let start = 0;
+        let result = [];
+        arr.map((item, index) => {
+          let num = parseInt(item);
+          if (!num) {
+            result = result.concat(arr.slice(start, index).join(''), item);
+            start = index + 1;
+          }
+        });
+        for (let i = arr.length - 1; i >= 0; i--) {
+          if (!parseInt(arr[i])) {
+            result.push(arr.slice(i + 1, arr.length).join(''));
+            return result;
+          }
+        }
+      }
+
+      console.log(newArr(str), 'str...');
+      let arr = newArr(str);
+      function r(arr) {
+        let a;
+        arr.map((item, index) => {
+          if (index == 0) {
+            a = parseInt(item);
+          } else {
+            if (!parseInt(item)) {
+              let next = arr[i+1];
+              if (item == '+') {
+                  a=a+next;
+              } else if (item == '-') {
+                a=a-next;
+              } else if (item == '*') {
+                a=a-next;
+              } else if (item == '/') {
+                a=a/next;
+              }
+            }
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

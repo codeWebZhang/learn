@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="test">sfdfd</div>
+    <script>
+      var id = document.getElementById('test');
+      id.addEventListener('click', function (e) {
+        e.stopPropagation();
+        console.log('1');
+      });
+      id.addEventListener('click', function (e) {
+        e.stopPropagation();
+        console.log('2');
+      });
+      // function fn1(event) {
+      //   event.eventevent();
+      //   console.log('1');
+      // }
+      // function fn2() {
+      //   console.log('2');
+      // }
+    </script>
+  </body>
+</html>

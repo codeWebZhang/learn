@@ -64,6 +64,7 @@
         let output = [];
         let stack = [node];
         while (stack.length) {
+          debugger;
           let item = stack.pop();
           output.push(item.val);
           if (item.right) {
