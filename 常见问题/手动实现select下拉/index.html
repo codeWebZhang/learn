@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>函数防抖和函数节流</title>
+  </head>
+  <body>
+    <div>
+      <div
+        id="content"
+        style="
+          height: 150px;
+          line-height: 150px;
+          text-align: center;
+          color: #ff1e1e;
+          background-color: #3cccc7;
+          font-size: 80px;
+        "
+      >
+        <div id="parent">
+          <div id="1">111</div>
+          <div onclick="click2()" id="2">2222</div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var wrap = document.getElementById('content');
+      var id1 = document.getElementById('1');
+      var id2 = document.getElementById('2');
+
+      // wrap.onclick = function (e) {
+      //   console.log(e, 'e...');
+      // };
+      wrap.addEventListener(
+        'click',
+        function (e) {
+          if (e.target.id === '1') {
+            console.log(1, e.target.parentNode.id);
+          } else if (e.target.id === '2') {
+            console.log(2);
+          }
+        },
+        false
+      );
+
+      function click1() {
+        // console.log('1');
+      }
+
+      function click2() {
+        // console.log('2');
+      }
+    </script>
+  </body>
+</html>

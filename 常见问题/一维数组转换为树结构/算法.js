@@ -40,10 +40,11 @@ function translateDataToTree(array) {
   // console.log(parents,'parents')
   return parents;
 }
-// console.log(translateDataToTree(nodes),'00')
+console.log(translateDataToTree(nodes),'00')
 
 
 function translateDataToTree1(data, parentId = '') {
+  debugger
   let tree = [];
   let temp;
   data.forEach((item, index) => {

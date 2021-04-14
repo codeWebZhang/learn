@@ -7,6 +7,7 @@
     <title>Document</title>
   </head>
   <body>
+    <h1>fn === fn.toString 的特性</h1>
     <script>
       // 实现一个add方法，使计算结果能够满足如下预期：
       // add(1)(2)(3) = 6;
@@ -37,6 +38,27 @@
       let c = add(1)(2)(3)(4)(5); // 15
       let d = add(2, 6)(1);
       console.log(a, b, c, d);
+    </script>
+
+    <script>
+      function foo() {
+        let param = getArg(arguments);
+        function fn() {
+          param = param.concat(getArg(arguments));
+          return fn;
+        }
+        function getArg(arg) {
+          return Array.prototype.slice.call(arg);
+        }
+        fn.getVal = function () {
+          return param.reduce((cur, next) => {
+            return cur + next;
+          });
+        };
+        return fn;
+      }
+      let sum = foo(1)(2)(3, 4);
+      sum.getVal();
     </script>
   </body>
 </html>
