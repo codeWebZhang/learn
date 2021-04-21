@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let count = 0;
+      let result = [];
+      let test1 = new Promise((reslove, reject) => {
+        setTimeout(() => {
+          reject({ count: ++count, key: 0 });
+        }, 3000);
+      });
+
+      // 以下写法错误
+      // .then((value) => {
+      //   result.push(value);
+      //   console.log(result, '----');
+      // })
+      // .catch((err) => {
+      //   return err;
+      // });
+
+      let test2 = new Promise((reslove, reject) => {
+        setTimeout(() => {
+          reject({ count: ++count, key: 1 });
+        }, 2000);
+      });
+
+      let test3 = new Promise((reslove, reject) => {
+        setTimeout(() => {
+          reject({ count: ++count, key: 2 });
+        }, 1000);
+      });
+
+      arr = [test1, test2, test3];
+
+      Promise.any(arr)
+        .then((value) => {
+          console.log(value, 'value...');
+          //剩余请求调用
+          otherRequest(value.key);
+        })
+
+        // 永远不会触发 any返回第一个成功的值，满足这个条件就不会触发
+
+        .catch((err) => {
+          console.log(err, '8888...err..');
+        });
+
+      function otherRequest(key) {
+        let data = arr.filter((item, index) => index != key);
+        Promise.all(data)
+          .then((value) => {
+            console.log(value);
+          })
+          .catch((err) => {
+            console.log(err, 'all---err');
+          });
+      }
+    </script>
+  </body>
+</html>

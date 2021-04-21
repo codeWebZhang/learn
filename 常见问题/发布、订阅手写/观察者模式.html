@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Subject {
+        constructor(props) {
+          this.state = 0;
+          this.notices = [];
+        }
+
+        getState() {
+          return this.state;
+        }
+
+        setState(state) {
+          this.state = state;
+          this.notices.forEach((item) => {
+            item.update();
+          });
+        }
+
+        attach(obj) {
+          this.notices.push(obj);
+        }
+      }
+
+      class Observes {
+        constructor(name, subject) {
+          this.name = name;
+          this.subject = subject;
+          this.subject.attach(this);
+        }
+
+        update() {
+          console.log(`${this.name} update; ${this.subject.getState()}`);
+        }
+      }
+
+      let s = new Subject();
+      let a = new Observes('name1', s);
+      let b = new Observes('name2', s);
+      s.setState(2);
+    </script>
+  </body>
+</html>

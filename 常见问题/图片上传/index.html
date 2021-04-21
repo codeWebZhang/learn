@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input id="input" multiple onchange="change()" type="file" />
+
+    <script>
+      var id = document.getElementById('input');
+      function change(e) {
+        var file = id.files;
+        console.log('--', file);
+      }
+      // id.addEventListener('change', handleFile, false);
+      // function handleFile() {
+      //   var fileLists = this.files;
+      //   console.log(fileLists, '===');
+      // }
+    </script>
+  </body>
+</html>

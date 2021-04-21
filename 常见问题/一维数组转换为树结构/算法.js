@@ -11,52 +11,25 @@ var nodes = [
   {"id":3,"parentId":0,"name":"父节点3 - 没有子节点"}
 ];
 
-
-function translateDataToTree(array) {
-  //第一层数据
-  let parents = array.filter(item => item.parentId === "");
-  //有父节点的数据
-  let childrens = array.filter(item => item.parentId !== "");
-  function translator(parents, childrens) {
-    parents.forEach( parent => {
-      childrens.forEach( (children, index) => {
-        //找到子层的父层
-        if (children.parentId === parent.id) {
-          //temp 这步不是必须
-          //对子节点数据进行深复制
-          let temp = JSON.parse(JSON.stringify(childrens));
-          //让当前子节点从temp中移除，temp作为新的子节点数据，这里是为了让递归时，子节点的遍历次数更少，如果父子关系的层级越多，越有利
-          temp.splice(index, 1);
-          //判断是否有children属性 有就直接push 没有就增加children属性
-          parent.children ? parent.children.push(children) : parent.children = [children];
-          //不用temp 传childrens也可
-          translator([children], temp);
-        }
-      })
-    })
-  }
-  translator(parents, childrens);
-  //返回最终结果
-  // console.log(parents,'parents')
-  return parents;
-}
-console.log(translateDataToTree(nodes),'00')
-
-
-function translateDataToTree1(data, parentId = '') {
+function translateDataToTree1(data, parentId = '',count=0) {
   debugger
   let tree = [];
   let temp;
+  count++;
   data.forEach((item, index) => {
-    if (data[index].parentId == parentId) {
-      let obj = data[index];
-      temp = translateDataToTree1(data, data[index].id);
-      if (temp.length > 0) {
-        obj.children = temp;
+    //控制其递归次数 防止无限递归
+    // if (count < 3) {
+      if (data[index].parentId === parentId) {
+        let obj = data[index];
+        temp = translateDataToTree1(data, data[index].id,count);
+        if (temp.length > 0) {
+          obj.children = temp;
+        }
+        tree.push(obj);
       }
-      tree.push(obj);
-    }
-  })
+      // }
+    })
+  console.log(count);
   return tree;
 }
 
