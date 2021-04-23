@@ -1,9 +1,10 @@
 let count = 0;
-function test1(r) {
+function test1(r,reject) {
   setTimeout(() => {
     count++;
     console.log('1', 'count==', count);
-    r(count);
+    // r(count);
+    reject('err...1')
   },3000)
 }
 function test2(r) {
@@ -22,16 +23,23 @@ function test3(r) {
   },1000)
 }
 
-let p = Promise.resolve();
+// let p = Promise.resolve();
+ // 两个p 完全相等
+let p = new Promise((resolve) => {
+  return resolve();
+})
 
 arr = [test1, test2, test3];
 
- function fn() {
+function fn() {
+  let error = false;
   for (let i = 0; i < arr.length; i++) {
     p = p.then(() => {
-      return new Promise((resolve) => {
-        arr[i](resolve);
-      })
+      if (error) { return null }
+      console.log(error,'88888')
+      return new Promise((resolve,reject) => {
+        arr[i](resolve,reject);
+      }).catch(err => { console.log(err, 'inner..er..'); error = true;})
     })
   }
 }

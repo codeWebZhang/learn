@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>上拉刷新下拉加载</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      ul li {
+        list-style: none;
+      }
+
+      main p {
+        text-align: center;
+      }
+
+      .nav {
+        background-color: #2196f3;
+        color: #fff;
+        height: 35px;
+        text-align: center;
+        line-height: 35px;
+        margin: 0;
+        padding: 0;
+      }
+
+      #pullUpText,
+      #pullDownText {
+        color: #03a9f4;
+      }
+    </style>
+    <script></script>
+  </head>
+
+  <body>
+    <header>
+      <p class="nav">上拉刷新下拉加载</p>
+    </header>
+    <main id="refreshContainer">
+      <p id="pullUpText"></p>
+      <ul id="refreshContent"></ul>
+      <p id="pullDownText">loading</p>
+    </main>
+
+    <script src="./generateData.js"></script>
+    <script src="./pullDown.js"></script>
+
+    <script>
+      let refreshContainer = document.getElementById('refreshContent');
+      let pullDownText = document.getElementById('pullDownText');
+
+      // 下拉刷新执行的函数
+      function refresh() {
+        let initData = generateRandomDataArray(50);
+        let fragment = dataToDocumentFragment(initData);
+        refreshContainer.innerHTML = '';
+        refreshContainer.appendChild(fragment);
+      }
+      refresh();
+
+      // 上拉加载执行的函数
+      function pullUpLoad() {
+        let loadData = loadDataFunc(10);
+        if (loadData.length === 0) {
+          pullDownText.textContent = '没有更多数据';
+          return;
+        }
+        let fragment = dataToDocumentFragment(loadData);
+        refreshContainer.appendChild(fragment);
+      }
+
+      // 把数据转成HTML标签
+      function dataToDocumentFragment(data) {
+        let fragment = document.createDocumentFragment();
+        data.forEach((d) => {
+          let li = document.createElement('li');
+          li.textContent = d;
+          fragment.appendChild(li);
+        });
+        return fragment;
+      }
+    </script>
+  </body>
+</html>
